@@ -3,6 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:async';
 
+import 'welcome_page.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -39,11 +41,19 @@ class _MyHomePageState extends State<MyHomePage> {
       getUserData(_user.uid).then((doc) {
         if(!doc.exists) {
           setUpNewUser(_user.uid).then((value) {
+            Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) {
+              return new WelcomePage();
+            }));
             setState(() {
               _ready = true;
             });
           });
         } else {
+
+          //TODO: REMOVE
+          Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) {
+            return new WelcomePage();
+          }));
           setState(() {
             _ready = true;
           });
