@@ -52,7 +52,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
           //TODO: REMOVE
           Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) {
-            return new WelcomePage();
+            return new WelcomePage(_user.uid);
           }));
           setState(() {
             _ready = true;
@@ -117,4 +117,12 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
   }
+}
+
+enum Frequency {
+  daily,
+  weekly,
+  biweekly,
+  monthly,
+  bimonthly,
 }

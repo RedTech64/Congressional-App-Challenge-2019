@@ -5,19 +5,21 @@ class ThemeTextField extends StatelessWidget {
   final ValueChanged<String> onChanged;
   final String label;
   final double width;
-
+  TextInputType keyboardType = TextInputType.text;
 
   ThemeTextField({
     @required this.controller,
     @required this.onChanged,
     @required this.label,
-    @required this.width
+    @required this.width,
+    this.keyboardType
   });
 
   Widget build(BuildContext context) {
     return Container(
       width: this.width,
       child: new TextField(
+        keyboardType: this.keyboardType,
         controller: this.controller,
         onChanged: this.onChanged,
         decoration: new InputDecoration(

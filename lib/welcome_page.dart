@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
 import 'common_widgets.dart';
+import 'create flow/selection_page.dart';
 
 class WelcomePage extends StatefulWidget {
+  String userID;
+  WelcomePage(this.userID);
+
   @override
-  _WelcomePageState createState() => _WelcomePageState();
+  _WelcomePageState createState() => _WelcomePageState(this.userID);
 }
 
 class _WelcomePageState extends State<WelcomePage> {
   TextEditingController nameController;
   String name;
+  String userID;
+
+  _WelcomePageState(this.userID);
 
   @override
   void initState() {
@@ -48,7 +55,15 @@ class _WelcomePageState extends State<WelcomePage> {
                 text: 'GET STARTED ',
                 icon: new Icon(Icons.arrow_forward_ios),
                 size: 36.0,
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushReplacement(context,
+                      new MaterialPageRoute(
+                        builder: (BuildContext context) {
+                          return new TypeSelectionPage();
+                        }
+                      )
+                  );
+                },
               ),
               new Spacer(flex: 5,),
             ],
