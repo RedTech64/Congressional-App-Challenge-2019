@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class TypeSelectionPage extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -81,7 +82,7 @@ class LineItem extends StatelessWidget {
   }
 
   addSaveObject(SaveObject saveObject) {
-    Firestore.instance.collection('users').document(userID).collection('saves').add({
+    Firestore.instance.collection('users').document().collection('saves').add({
       'name': saveObject.name,
       'cost': saveObject.cost,
       'frequency': saveObject.frequency,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:async';
+import 'user_data_container.dart';
 
 import 'welcome_page.dart';
 
@@ -10,12 +11,14 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return new StateContainer(
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: MyHomePage(title: 'Flutter Demo Home Page'),
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
@@ -39,6 +42,8 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     _checkCurrentUser().then((value) {
       getUserData(_user.uid).then((doc) {
+        var container = StateContainer.of(context);
+        container.updateUserInfo(uid: _user.uid);
         if(!doc.exists) {
           setUpNewUser(_user.uid).then((value) {
             Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) {
@@ -52,7 +57,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
           //TODO: REMOVE
           Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) {
-            return new WelcomePage(_user.uid);
+            return new WelcomePage();
           }));
           setState(() {
             _ready = true;

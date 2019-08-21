@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
 import 'common_widgets.dart';
 import 'create flow/selection_page.dart';
+import 'main.dart';
+import 'user_data_container.dart';
 
 class WelcomePage extends StatefulWidget {
-  String userID;
-  WelcomePage(this.userID);
 
   @override
-  _WelcomePageState createState() => _WelcomePageState(this.userID);
+  _WelcomePageState createState() => _WelcomePageState();
 }
 
 class _WelcomePageState extends State<WelcomePage> {
   TextEditingController nameController;
   String name;
-  String userID;
 
-  _WelcomePageState(this.userID);
+  _WelcomePageState();
 
   @override
   void initState() {
@@ -25,6 +24,8 @@ class _WelcomePageState extends State<WelcomePage> {
 
   @override
   Widget build(BuildContext context) {
+    var container = StateContainer.of(context);
+    print(container.user.uid);
     // TODO: implement build
     return new Scaffold(
       body: Padding(
