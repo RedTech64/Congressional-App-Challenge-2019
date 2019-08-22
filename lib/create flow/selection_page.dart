@@ -2,6 +2,7 @@ import '../main.dart';
 import 'item.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cac_2019/user_data_container.dart';
 
 class TypeSelectionPage extends StatelessWidget {
 
@@ -72,17 +73,21 @@ class LineItem extends StatelessWidget {
         ],
       ),
       onTap: () async {
-        SaveObject result = await Navigator.push(context, new MaterialPageRoute(
+        SaveObject result = await Navigator.push(context, new MaterialPageRoute<SaveObject>(
           builder: (BuildContext context) {
-            return nextPage;
+            return ItemPage();
           }
         ));
+        if(result != null) {
+          var container = StateContainer.of(context);
+          addSaveObject(result,container.user.uid);
+        }
       },
     );
   }
 
-/*  addSaveObject(SaveObject saveObject) {
-    Firestore.instance.collection('users').document(userID).collection('saves').add({
+  addSaveObject(SaveObject saveObject,uid) {
+    Firestore.instance.collection('users').document(uid).collection('saves').add({
       'name': saveObject.name,
       'cost': saveObject.cost,
       'frequency': saveObject.frequency,
@@ -100,4 +105,13 @@ class SaveObject {
   num amount;
   DateTime startDate;
   DateTime completeDate;
+
+  SaveObject({
+    this.name,
+    this.cost,
+    this.frequency,
+    this.amount,
+    this.startDate,
+    this.completeDate,
+  });
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cac_2019/common_widgets.dart';
 import 'package:cac_2019/main.dart';
+import 'selection_page.dart';
 
 class ItemPage extends StatefulWidget {
   @override
@@ -40,7 +41,14 @@ class _ItemPageState extends State<ItemPage> {
       floatingActionButton: new FloatingActionButton(
         child: new Icon(Icons.add),
         onPressed: () {
-          Navigator.pop(context);
+          var saveObject = new SaveObject(
+              name: itemName,
+              cost: itemCost,
+              frequency: frequency,
+              startDate: _startDate,
+              completeDate: _dueDate
+          );
+          Navigator.of(context).pop(saveObject);
         },
       ),
       body: new SingleChildScrollView(

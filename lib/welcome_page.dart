@@ -30,8 +30,6 @@ class _WelcomePageState extends State<WelcomePage> {
   @override
   Widget build(BuildContext context) {
     var container = StateContainer.of(context);
-    print(container.user.uid);
-    // TODO: implement build
     return new Scaffold(
       backgroundColor: Color.fromRGBO(105,240,174,1.0),
       body: Padding(
