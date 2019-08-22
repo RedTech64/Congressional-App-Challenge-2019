@@ -47,7 +47,7 @@ class _MyHomePageState extends State<MyHomePage> {
         if(!doc.exists) {
           setUpNewUser(_user.uid).then((value) {
             Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) {
-              return new WelcomePage();
+              return new WelcomePage(_user.uid);
             }));
             setState(() {
               _ready = true;
@@ -104,7 +104,17 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     if(!_ready) {
-      return new LinearProgressIndicator();
+      return new Scaffold(
+        backgroundColor: Color.fromRGBO(105,240,174,1.0),
+        body: Center(
+          child: CircularProgressIndicator(
+            backgroundColor: Color.fromRGBO(105,240,174,1.0),
+          ),
+      ),
+
+      );
+
+
     }
     return Scaffold(
       appBar: AppBar(

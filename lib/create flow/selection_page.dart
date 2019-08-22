@@ -81,8 +81,8 @@ class LineItem extends StatelessWidget {
     );
   }
 
-  addSaveObject(SaveObject saveObject) {
-    Firestore.instance.collection('users').document().collection('saves').add({
+/*  addSaveObject(SaveObject saveObject) {
+    Firestore.instance.collection('users').document(userID).collection('saves').add({
       'name': saveObject.name,
       'cost': saveObject.cost,
       'frequency': saveObject.frequency,
@@ -90,7 +90,7 @@ class LineItem extends StatelessWidget {
       'startDate': Timestamp.fromDate(saveObject.startDate),
       'completeDate': Timestamp.fromDate(saveObject.completeDate),
     });
-  }
+  }*/
 }
 
 class SaveObject {
