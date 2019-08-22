@@ -95,7 +95,7 @@ class LineItem extends StatelessWidget {
       'startDate': Timestamp.fromDate(saveObject.startDate),
       'completeDate': Timestamp.fromDate(saveObject.completeDate),
     });
-  }*/
+  }
 }
 
 class SaveObject {

@@ -47,7 +47,7 @@ class _MyHomePageState extends State<MyHomePage> {
         if(!doc.exists) {
           setUpNewUser(_user.uid).then((value) {
             Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) {
-              return new WelcomePage(_user.uid);
+              return new WelcomePage();
             }));
             setState(() {
               _ready = true;
