@@ -82,7 +82,8 @@ class _MyHomePageState extends State<MyHomePage> {
   Future<FirebaseUser> signInAnonymously() async {
     FirebaseUser user;
     try {
-      user = await _auth.signInAnonymously();
+      AuthResult result = await _auth.signInAnonymously();
+      user = result.user;
     } catch(error) {
       return null;
     }
