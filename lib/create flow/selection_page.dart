@@ -81,6 +81,7 @@ class LineItem extends StatelessWidget {
         if(result != null) {
           var container = StateContainer.of(context);
           addSaveObject(result,container.user.uid);
+          Navigator.pop(context);
         }
       },
     );

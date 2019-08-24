@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:async';
+import 'home.dart';
 import 'user_data_container.dart';
 
 import 'welcome_page.dart';
@@ -110,27 +111,10 @@ class _MyHomePageState extends State<MyHomePage> {
           child: CircularProgressIndicator(
             backgroundColor: Color.fromRGBO(105,240,174,1.0),
           ),
-      ),
-
-      );
-
-
-    }
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              _user.uid,
-            ),
-          ],
         ),
-      ),
-    );
+      );
+    }
+    return new HomePage();
   }
 }
 
