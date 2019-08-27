@@ -18,8 +18,9 @@ class _HomePageState extends State<HomePage> {
         title: new Text('Home'),
       ),
       body: StreamBuilder<QuerySnapshot>(
-        stream: Firestore.instance.collection('users').document(container.user.uid).collection('saves').getDocuments().asStream(),
+        stream: Firestore.instance.collection('users').document(container.user.uid).collection('saves').snapshots(),
         builder: (context, snapshot) {
+          print("update");
           return new PageView(
             children: _getSavePages(snapshot.data.documents),
           );
@@ -42,7 +43,16 @@ class _HomePageState extends State<HomePage> {
   List<Widget> _getSavePages(List<DocumentSnapshot> saves) {
     List<Widget> list = [];
     saves.forEach((save) {
-      list.add(new Container());
+      list.add(
+        new Center(
+          child: new Column(
+            children: <Widget>[
+              new Text(save.data['name']),
+            ],
+          ),
+        ),
+      );
     });
+    return list;
   }
 }
