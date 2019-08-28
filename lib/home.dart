@@ -10,36 +10,53 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
   @override
   Widget build(BuildContext context) {
     var container = StateContainer.of(context);
-    return new Scaffold(
-      appBar: new AppBar(
-        title: new Text('Home'),
-      ),
-      body: StreamBuilder<QuerySnapshot>(
-        stream: Firestore.instance.collection('users').document(container.user.uid).collection('saves').snapshots(),
-        builder: (context, snapshot) {
-          print("update");
-          return new PageView(
-            children: _getSavePages(snapshot.data.documents),
-          );
-        }
-      ),
-      floatingActionButton: new FloatingActionButton(
-        child: new Icon(Icons.add),
-        onPressed: () {
-          Navigator.of(context).push(
-            new MaterialPageRoute(
-              builder: (BuildContext context) {
-                return new TypeSelectionPage();
-              }
+    return StreamBuilder<QuerySnapshot>(
+      stream: Firestore.instance.collection('users').document(container.user.uid).collection('saves').snapshots(),
+      builder: (context, snapshot) {
+        return DefaultTabController(
+          length: snapshot.data.documents.length,
+          child: new Scaffold(
+            appBar: new AppBar(
+              bottom: TabBar(
+                tabs: _getTabIcons(snapshot.data.documents),
+              ),
+              title: new Text('Home'),
             ),
-          );
-        },
-      ),
+            body: TabBarView(
+              children: _getSavePages(snapshot.data.documents),
+            ),
+            floatingActionButton: new FloatingActionButton(
+              child: new Icon(Icons.add),
+              onPressed: () {
+                Navigator.of(context).push(
+                  new MaterialPageRoute(
+                    builder: (BuildContext context) {
+                      return new TypeSelectionPage();
+                    }
+                  ),
+                );
+              },
+            ),
+          ),
+        );
+      }
     );
   }
+
+  List<Widget> _getTabIcons(List<DocumentSnapshot> saves) {
+    List<Widget> list = [];
+    saves.forEach((save) {
+      list.add(
+        new Tab(icon: new Icon(Icons.add)),
+      );
+    });
+    return list;
+  }
+
   List<Widget> _getSavePages(List<DocumentSnapshot> saves) {
     List<Widget> list = [];
     saves.forEach((save) {
