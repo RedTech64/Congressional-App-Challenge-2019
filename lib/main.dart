@@ -16,7 +16,10 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
-          primarySwatch: Colors.blue,
+          primaryColor: Color.fromRGBO(105,240,174,1.0),
+          canvasColor: Color.fromRGBO(255,255,255,1.0),
+          buttonColor: Color.fromRGBO(105,240,174,1.0),
+
         ),
         home: MyHomePage(title: 'Flutter Demo Home Page'),
       ),

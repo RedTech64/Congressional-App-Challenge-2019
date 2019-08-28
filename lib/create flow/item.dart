@@ -36,10 +36,12 @@ class _ItemPageState extends State<ItemPage> {
       _dueDate = _getCompleteDate();
     return Scaffold(
       appBar: new AppBar(
+        backgroundColor: Color.fromRGBO(105,240,174,1.0),
         title: new Text('Save for an Item'),
       ),
-      floatingActionButton: new FloatingActionButton(
+      /*floatingActionButton: new FloatingActionButton(
         child: new Icon(Icons.add),
+        backgroundColor: Color.fromRGBO(105,240,174,1.0),
         onPressed: () {
           var saveObject = new SaveObject(
               name: itemName,
@@ -50,7 +52,7 @@ class _ItemPageState extends State<ItemPage> {
           );
           Navigator.of(context).pop(saveObject);
         },
-      ),
+      ),*/
       body: new SingleChildScrollView(
         child: new Center(
           child: new Column(
@@ -156,6 +158,7 @@ class _ItemPageState extends State<ItemPage> {
                         children: <Widget>[
                           new Radio(
                             value: 1,
+                            activeColor: Color.fromRGBO(105,240,174,1.0),
                             onChanged: _saveTypeChanged,
                             groupValue: radioValue,
                           ),
@@ -189,6 +192,7 @@ class _ItemPageState extends State<ItemPage> {
                         children: <Widget>[
                           new Radio(
                             value: 2,
+                            activeColor: Color.fromRGBO(105,240,174,1.0),
                             onChanged: _saveTypeChanged,
                             groupValue: radioValue,
                           ),
@@ -212,8 +216,30 @@ class _ItemPageState extends State<ItemPage> {
                         ],
                       ),
                     ],
+
                   ),
                 ),
+              ),
+              new RaisedButton(
+                color: Color.fromRGBO(105,240,174,1.0),
+                child: Text(
+                  "DONE",
+                  style: new TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+
+                textColor: Color.fromRGBO(255,255,255,1.0),
+                onPressed: () {
+                  var saveObject = new SaveObject(
+                      name: itemName,
+                      cost: itemCost,
+                      frequency: frequency,
+                      startDate: _startDate,
+                      completeDate: _dueDate
+                  );
+                  Navigator.of(context).pop(saveObject);
+                },
               ),
             ],
           ),
