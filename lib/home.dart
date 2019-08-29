@@ -9,7 +9,13 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin{
+  int tabIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +27,24 @@ class _HomePageState extends State<HomePage> {
           length: snapshot.data.documents.length,
           child: new Scaffold(
             appBar: new AppBar(
+              actions: <Widget>[
+                Builder(builder: (context) {
+                  return new IconButton(
+                    icon: new Icon(Icons.delete),
+                    onPressed: () {
+                      snapshot.data.documents[DefaultTabController.of(context).index].reference.delete();
+                    },
+                  );
+                }),
+
+              ],
               bottom: TabBar(
+                onTap: (index) {
+                  print(index);
+                  setState(() {
+                    this.tabIndex = index;
+                  });
+                },
                 tabs: _getTabIcons(snapshot.data.documents),
               ),
               title: new Text('Home'),
@@ -51,7 +74,12 @@ class _HomePageState extends State<HomePage> {
     List<Widget> list = [];
     saves.forEach((save) {
       list.add(
-        new Tab(icon: new Icon(Icons.add)),
+        new GestureDetector(
+          child: new Tab(icon: new Icon(Icons.add)),
+          onLongPress: () {
+            //TODO: ADD LONG PRESS ACTION ()
+          },
+        ),
       );
     });
     return list;
@@ -64,7 +92,7 @@ class _HomePageState extends State<HomePage> {
         new Center(
           child: new Column(
             children: <Widget>[
-              new Text(save.data['name']),
+              new Text(save.documentID),
             ],
           ),
         ),
