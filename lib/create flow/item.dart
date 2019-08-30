@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:cac_2019/common_widgets.dart';
 import 'package:cac_2019/main.dart';
 import 'selection_page.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cac_2019/user_data_container.dart';
 
 class ItemPage extends StatefulWidget {
   @override
@@ -34,11 +36,19 @@ class _ItemPageState extends State<ItemPage> {
       saveAmountController.text = _getSaveAmount().toString();
     if(radioValue == 2)
       _dueDate = _getCompleteDate();
+    var container = StateContainer.of(context);
     return Scaffold(
       appBar: new AppBar(
+        iconTheme: IconThemeData(
+        color: Colors.white,
+        ),//change your color here
         backgroundColor: Color.fromRGBO(105,240,174,1.0),
-        title: new Text('Save for an Item'),
-      ),
+        title: new Text(
+            'Save for an Item',
+            style: new TextStyle(
+              color: Color.fromRGBO(255,255,255, 1.0),
+            ),
+        ),
       /*floatingActionButton: new FloatingActionButton(
         child: new Icon(Icons.add),
         backgroundColor: Color.fromRGBO(105,240,174,1.0),
@@ -53,6 +63,7 @@ class _ItemPageState extends State<ItemPage> {
           Navigator.of(context).pop(saveObject);
         },
       ),*/
+      ),
       body: new SingleChildScrollView(
         child: new Center(
           child: new Column(
@@ -216,7 +227,6 @@ class _ItemPageState extends State<ItemPage> {
                         ],
                       ),
                     ],
-
                   ),
                 ),
               ),
@@ -238,7 +248,8 @@ class _ItemPageState extends State<ItemPage> {
                       startDate: _startDate,
                       completeDate: _dueDate
                   );
-                  Navigator.of(context).pop(saveObject);
+                  addSaveObject(saveObject, container.user.uid);
+                  Navigator.pop(context);
                 },
               ),
             ],
@@ -246,6 +257,16 @@ class _ItemPageState extends State<ItemPage> {
         ),
       ),
     );
+  }
+  addSaveObject(SaveObject saveObject,uid) {
+    Firestore.instance.collection('users').document(uid).collection('saves').add({
+      'name': saveObject.name,
+      'cost': saveObject.cost,
+      'frequency': saveObject.frequency,
+      'amount': saveObject.amount,
+      'startDate': Timestamp.fromDate(saveObject.startDate),
+      'completeDate': Timestamp.fromDate(saveObject.completeDate),
+    });
   }
 
   void _saveTypeChanged(int value) {
@@ -268,4 +289,23 @@ class _ItemPageState extends State<ItemPage> {
     Duration gap = new Duration(days: frequency);
     return new DateTime.now().add(new Duration(days: gap.inDays*saveTimes));
   }
+}
+
+
+class SaveObject {
+  String name;
+  num cost;
+  int frequency;
+  num amount;
+  DateTime startDate;
+  DateTime completeDate;
+
+  SaveObject({
+    this.name,
+    this.cost,
+    this.frequency,
+    this.amount,
+    this.startDate,
+    this.completeDate,
+  });
 }

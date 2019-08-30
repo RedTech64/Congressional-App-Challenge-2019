@@ -1,7 +1,7 @@
 import 'package:cac_2019/user_data_container.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
+import 'create flow/item.dart';
 import 'create flow/selection_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -26,6 +26,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
         return DefaultTabController(
           length: snapshot.data.documents.length,
           child: new Scaffold(
+
             appBar: new AppBar(
               actions: <Widget>[
                 Builder(builder: (context) {
@@ -46,8 +47,11 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                   });
                 },
                 tabs: _getTabIcons(snapshot.data.documents),
+                labelColor: Colors.white,
               ),
-              title: new Text('Home'),
+              title: new Text(
+
+                  'Home'),
             ),
             body: TabBarView(
               children: _getSavePages(snapshot.data.documents),
@@ -58,7 +62,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                 Navigator.of(context).push(
                   new MaterialPageRoute(
                     builder: (BuildContext context) {
-                      return new TypeSelectionPage();
+                      return new ItemPage();
                     }
                   ),
                 );

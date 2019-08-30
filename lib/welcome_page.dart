@@ -5,6 +5,7 @@ import 'main.dart';
 import 'user_data_container.dart';
 import 'package:flutter/services.dart';
 import 'package:page_transition/page_transition.dart';
+import 'create flow/item.dart';
 
 class WelcomePage extends StatefulWidget {
 
@@ -45,7 +46,7 @@ class _WelcomePageState extends State<WelcomePage> {
 
             new MaterialPageRoute(
                 builder: (BuildContext context) {
-                  return new TypeSelectionPage();
+                  return new ItemPage();
                 }
             )
           );

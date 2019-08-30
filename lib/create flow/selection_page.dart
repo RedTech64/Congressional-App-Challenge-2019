@@ -43,11 +43,6 @@ class TypeSelectionPage extends StatelessWidget {
 
                       //new Divider(),
 
-                      new LineItem(
-                        icon: new Icon(Icons.add),
-                        text: 'Item',
-                        nextPage: new ItemPage(),
-                      ),
                     ],
                   ),
                 ),
@@ -61,67 +56,3 @@ class TypeSelectionPage extends StatelessWidget {
 
 }
 
-class LineItem extends StatelessWidget {
-  final Widget nextPage;
-  final Icon icon;
-  final String text;
-
-  LineItem({
-    this.nextPage,
-    this.icon,
-    this.text,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return new InkWell(
-      child: new Row(
-        children: <Widget>[
-          this.icon,
-          new Text(this.text),
-        ],
-      ),
-      onTap: () async {
-        SaveObject result = await Navigator.push(context, new MaterialPageRoute<SaveObject>(
-          builder: (BuildContext context) {
-            return ItemPage();
-          }
-        ));
-        if(result != null) {
-          var container = StateContainer.of(context);
-          addSaveObject(result,container.user.uid);
-          Navigator.pop(context);
-        }
-      },
-    );
-  }
-
-  addSaveObject(SaveObject saveObject,uid) {
-    Firestore.instance.collection('users').document(uid).collection('saves').add({
-      'name': saveObject.name,
-      'cost': saveObject.cost,
-      'frequency': saveObject.frequency,
-      'amount': saveObject.amount,
-      'startDate': Timestamp.fromDate(saveObject.startDate),
-      'completeDate': Timestamp.fromDate(saveObject.completeDate),
-    });
-  }
-}
-
-class SaveObject {
-  String name;
-  num cost;
-  int frequency;
-  num amount;
-  DateTime startDate;
-  DateTime completeDate;
-
-  SaveObject({
-    this.name,
-    this.cost,
-    this.frequency,
-    this.amount,
-    this.startDate,
-    this.completeDate,
-  });
-}
