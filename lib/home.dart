@@ -23,7 +23,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     return StreamBuilder<QuerySnapshot>(
       stream: Firestore.instance.collection('users').document(container.user.uid).collection('saves').snapshots(),
       builder: (context, snapshot) {
-        if(snapshot == null)
+        if(snapshot == null || snapshot.data == null || snapshot.data.documents == null)
           return new Scaffold(
             body: new Container(),
           );
