@@ -16,7 +16,7 @@ class _ItemPageState extends State<ItemPage> {
   TextEditingController saveAmountController;
   String itemName = "";
   double itemCost = 100.0;
-  double saveAmount = 0.0;
+  double dividedAmount = 0.0;
   int radioValue = 2;
   DateTime _dueDate = new DateTime.now();
   DateTime _startDate = new DateTime.now();
@@ -25,8 +25,8 @@ class _ItemPageState extends State<ItemPage> {
   @override
   void initState() {
     itemNameController = new TextEditingController(text: itemName);
-    itemCostController = new TextEditingController(text: itemCost.toString());
-    saveAmountController = new TextEditingController(text: saveAmount.toString());
+    itemCostController = new TextEditingController(text: "\$"+itemCost.toString());
+    saveAmountController = new TextEditingController(text: dividedAmount.toString());
     super.initState();
   }
 
@@ -49,20 +49,6 @@ class _ItemPageState extends State<ItemPage> {
               color: Color.fromRGBO(255,255,255, 1.0),
             ),
         ),
-      /*floatingActionButton: new FloatingActionButton(
-        child: new Icon(Icons.add),
-        backgroundColor: Color.fromRGBO(105,240,174,1.0),
-        onPressed: () {
-          var saveObject = new SaveObject(
-              name: itemName,
-              cost: itemCost,
-              frequency: frequency,
-              startDate: _startDate,
-              completeDate: _dueDate
-          );
-          Navigator.of(context).pop(saveObject);
-        },
-      ),*/
       ),
       body: new SingleChildScrollView(
         child: new Center(
@@ -91,6 +77,7 @@ class _ItemPageState extends State<ItemPage> {
                       Container(height: 10,),
                       new ThemeTextField(
                         controller: itemCostController,
+                        keyboardType: TextInputType.number,
                         label: 'Item Cost',
                         width: 200.0,
                         onChanged: (value) {
@@ -185,7 +172,7 @@ class _ItemPageState extends State<ItemPage> {
                             onPressed: () async {
                               DateTime result = await showDatePicker(
                                 initialDate: _dueDate,
-                                firstDate: DateTime.utc(_dueDate.year, _dueDate.month, _dueDate.day),
+                                firstDate: DateTime.utc(_startDate.year, _startDate.month, _startDate.day),
                                 lastDate: DateTime(2200),
                                 context: context,
                               );
@@ -220,7 +207,7 @@ class _ItemPageState extends State<ItemPage> {
                             width: 200,
                             onChanged: (value) {
                               setState(() {
-                                saveAmount = double.parse(value);
+                                dividedAmount = double.parse(value);
                               });
                             },
                           ),
@@ -245,6 +232,8 @@ class _ItemPageState extends State<ItemPage> {
                       name: itemName,
                       cost: itemCost,
                       frequency: frequency,
+                      dividedAmount: dividedAmount,
+                      savedAmount: 0.0,
                       startDate: _startDate,
                       completeDate: _dueDate
                   );
@@ -263,7 +252,8 @@ class _ItemPageState extends State<ItemPage> {
       'name': saveObject.name,
       'cost': saveObject.cost,
       'frequency': saveObject.frequency,
-      'amount': saveObject.amount,
+      'dividedAmount': saveObject.dividedAmount,
+      'savedAmount': saveObject.savedAmount,
       'startDate': Timestamp.fromDate(saveObject.startDate),
       'completeDate': Timestamp.fromDate(saveObject.completeDate),
     });
@@ -284,8 +274,8 @@ class _ItemPageState extends State<ItemPage> {
 
   DateTime _getCompleteDate() {
     int saveTimes = 1;
-    if(saveAmount > 0)
-      saveTimes = itemCost~/saveAmount;
+    if(dividedAmount > 0)
+      saveTimes = itemCost~/dividedAmount;
     Duration gap = new Duration(days: frequency);
     return new DateTime.now().add(new Duration(days: gap.inDays*saveTimes));
   }
@@ -296,7 +286,8 @@ class SaveObject {
   String name;
   num cost;
   int frequency;
-  num amount;
+  num dividedAmount;
+  num savedAmount;
   DateTime startDate;
   DateTime completeDate;
 
@@ -304,7 +295,8 @@ class SaveObject {
     this.name,
     this.cost,
     this.frequency,
-    this.amount,
+    this.dividedAmount,
+    this.savedAmount,
     this.startDate,
     this.completeDate,
   });

@@ -27,6 +27,7 @@ dependencies:
   cloud_firestore: any
   firebase_core: any
   page_transition: ^1.1.4
+  flutter_masked_text: ^0.7.0
 
 dev_dependencies:
   flutter_test:

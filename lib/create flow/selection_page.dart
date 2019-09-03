@@ -27,22 +27,6 @@ class TypeSelectionPage extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
 
-                     /* new LineItem(
-                        icon: new Icon(Icons.person),
-                        text: 'Retirement',
-                        nextPage: null,
-                      ),*/
-
-                      //new Divider(),
-
-                      /*new LineItem(
-                        icon: new Icon(Icons.directions_car),
-                        text: 'Car',
-                        nextPage: null,
-                      ),*/
-
-                      //new Divider(),
-
                     ],
                   ),
                 ),

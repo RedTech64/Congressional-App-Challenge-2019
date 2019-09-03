@@ -23,10 +23,13 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     return StreamBuilder<QuerySnapshot>(
       stream: Firestore.instance.collection('users').document(container.user.uid).collection('saves').snapshots(),
       builder: (context, snapshot) {
+        if(snapshot == null)
+          return new Scaffold(
+            body: new Container(),
+          );
         return DefaultTabController(
           length: snapshot.data.documents.length,
           child: new Scaffold(
-
             appBar: new AppBar(
               actions: <Widget>[
                 Builder(builder: (context) {
@@ -50,8 +53,8 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                 labelColor: Colors.white,
               ),
               title: new Text(
-
-                  'Home'),
+                  'Home'
+              ),
             ),
             body: TabBarView(
               children: _getSavePages(snapshot.data.documents),
@@ -96,7 +99,9 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
         new Center(
           child: new Column(
             children: <Widget>[
-              new Text(save.documentID),
+/*              new Text(
+                save.data[''],
+              ),*/
             ],
           ),
         ),
