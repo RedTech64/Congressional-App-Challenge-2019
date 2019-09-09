@@ -29,11 +29,13 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
           );
         return DefaultTabController(
           length: snapshot.data.documents.length,
+          
           child: new Scaffold(
             appBar: new AppBar(
               actions: <Widget>[
                 Builder(builder: (context) {
                   return new IconButton(
+                    color: Colors.white,
                     icon: new Icon(Icons.delete),
                     onPressed: () {
                       snapshot.data.documents[DefaultTabController.of(context).index].reference.delete();
@@ -53,12 +55,17 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                 labelColor: Colors.white,
               ),
               title: new Text(
-                  'Home'
+                  'Home',
+                style: new TextStyle(
+                  color: Colors.white,
+                )
+
               ),
             ),
             body: TabBarView(
               children: _getSavePages(snapshot.data.documents),
             ),
+
             floatingActionButton: new FloatingActionButton(
               child: new Icon(Icons.add),
               onPressed: () {
@@ -76,6 +83,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
       }
     );
   }
+
 
   List<Widget> _getTabIcons(List<DocumentSnapshot> saves) {
     List<Widget> list = [];
@@ -98,10 +106,138 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
       list.add(
         new Center(
           child: new Column(
+            mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-/*              new Text(
-                save.data[''],
-              ),*/
+              new Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Card(
+                    child: Column(
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: new Text(
+                            save.data['name'],
+                            style: new TextStyle(
+                              color: Color.fromRGBO(105,240,174,1.0),
+                              fontSize: 32.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: new Divider(
+                            color: Color.fromRGBO(105,240,174,1.0),
+                          ),
+
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Center(
+                            child: new Row(
+                              children: <Widget>[
+                                Spacer(flex: 1,),
+                                Container(
+                                  color: Color.fromRGBO(105,240,174,1.0),
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: new Text(
+                                    save.data['savedAmount'].toString(),
+                                    style: new TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 32.0,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+
+
+                                  ),
+                                ),
+                                Spacer(flex: 3,),
+                                Container(
+                                  color: Color.fromRGBO(105,240,174,1.0),
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: new Text(
+                                    save.data['cost'].toString(),
+                                    style: new TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 32.0,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+
+
+                              ],
+
+                            ),
+                          ),
+
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: new Divider(
+                            color: Color.fromRGBO(105,240,174,1.0),
+                          ),
+
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Center(
+                            child: new Row(
+                              children: <Widget>[
+                                Spacer(flex: 1,),
+                                Container(
+                                  color: Color.fromRGBO(105,240,174,1.0),
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: new Text(
+                                    save.data['dividedAmount'].toString(),
+                                    style: new TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 32.0,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+
+
+                                  ),
+                                ),
+                                Spacer(flex: 3,),
+                                Container(
+                                  color: Color.fromRGBO(105,240,174,1.0),
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: new Text(
+                                    save.data['frequency'].toString(),
+                                    style: new TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 32.0,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+
+                              ],
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: new Divider(
+                            color: Color.fromRGBO(105,240,174,1.0),
+                          ),
+
+                        ),
+                        new Placeholder(
+                          fallbackWidth: 100,
+                          fallbackHeight: 200,
+                        ),
+
+                      ],
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
         ),
