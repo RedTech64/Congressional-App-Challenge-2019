@@ -37,8 +37,27 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                   return new IconButton(
                     color: Colors.white,
                     icon: new Icon(Icons.delete),
-                    onPressed: () {
-                      snapshot.data.documents[DefaultTabController.of(context).index].reference.delete();
+                    onPressed: () async {
+                      bool result = await showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: const Text('Are you sure you want to delete this save?'),
+                            actions: <Widget>[
+                              FlatButton(
+                                onPressed: () { Navigator.pop(context, true); },
+                                child: const Text('DELETE'),
+                              ),
+                              FlatButton(
+                                onPressed: () { Navigator.pop(context, false); },
+                                child: const Text('CANCEL'),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                      if(result)
+                        snapshot.data.documents[DefaultTabController.of(context).index].reference.delete();
                     },
                   );
                 }),
