@@ -4,6 +4,7 @@ import 'package:cac_2019/main.dart';
 import 'selection_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cac_2019/user_data_container.dart';
+import 'package:flutter_masked_text/flutter_masked_text.dart';
 
 class ItemPage extends StatefulWidget {
   @override
@@ -11,12 +12,12 @@ class ItemPage extends StatefulWidget {
 }
 
 class _ItemPageState extends State<ItemPage> {
-  TextEditingController itemNameController;
-  TextEditingController itemCostController;
-  TextEditingController saveAmountController;
+  var itemNameController;
+  var itemCostController;
+  var saveAmountController;
   String itemName = "";
   double itemCost = 100.0;
-  double dividedAmount = 0.0;
+  double dividedAmount = 1.0;
   int radioValue = 2;
   DateTime _dueDate = new DateTime.now();
   DateTime _startDate = new DateTime.now();
@@ -25,8 +26,8 @@ class _ItemPageState extends State<ItemPage> {
   @override
   void initState() {
     itemNameController = new TextEditingController(text: itemName);
-    itemCostController = new TextEditingController(text: "\$"+itemCost.toString());
-    saveAmountController = new TextEditingController(text: dividedAmount.toString());
+    itemCostController = new MoneyMaskedTextController(leftSymbol: "\$", initialValue: itemCost, decimalSeparator: ".", thousandSeparator: ",");
+    saveAmountController = new MoneyMaskedTextController(leftSymbol: "\$", initialValue: dividedAmount, decimalSeparator: ".", thousandSeparator: ",");
     super.initState();
   }
 
