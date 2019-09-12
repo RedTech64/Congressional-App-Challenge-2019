@@ -22,6 +22,7 @@ class _ItemPageState extends State<ItemPage> {
   DateTime _dueDate = new DateTime.now();
   DateTime _startDate = new DateTime.now();
   int frequency = 7;
+  Icon icon = new Icon(Icons.add);
 
   @override
   void initState() {
@@ -139,6 +140,42 @@ class _ItemPageState extends State<ItemPage> {
                           ),
                         ],
                       ),
+                      new Row(
+                        children: <Widget>[
+                          new SimpleText("Icon: ", bold: true, size: 20,),
+                          icon,
+                          new IconButton(
+                            icon: new Icon(Icons.edit),
+                            onPressed: () async {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  List icons = [Icons.add,Icons.card_giftcard,Icons.category,Icons.description,Icons.phone];
+                                  Icon newIcon = icon;
+                                  return new AlertDialog(
+                                    title: new Text("Select Icon"),
+                                    content: Container(
+                                      height: 400,
+                                      width: 100,
+                                      child: new GridView.builder(
+                                        itemCount: icons.length,
+                                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 4),
+                                        itemBuilder: (BuildContext context, int index) {
+                                          return new Container(
+                                            height: 10,
+                                            width: 10,
+                                            child: new IconButton(icon: new Icon(icons[index]), onPressed: () {setState(() {icon = new Icon(icons[index]);});Navigator.pop(context);},),
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                  );
+                                }
+                              );
+                            },
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 ),
@@ -230,13 +267,14 @@ class _ItemPageState extends State<ItemPage> {
                 textColor: Color.fromRGBO(255,255,255,1.0),
                 onPressed: () {
                   var saveObject = new SaveObject(
-                      name: itemName,
-                      cost: itemCost,
-                      frequency: frequency,
-                      dividedAmount: dividedAmount,
-                      savedAmount: 0.0,
-                      startDate: _startDate,
-                      completeDate: _dueDate
+                    name: itemName,
+                    cost: itemCost,
+                    frequency: frequency,
+                    dividedAmount: dividedAmount,
+                    savedAmount: 0.0,
+                    startDate: _startDate,
+                    completeDate: _dueDate,
+                    icon: icon,
                   );
                   addSaveObject(saveObject, container.user.uid);
                   Navigator.pop(context);
@@ -257,6 +295,7 @@ class _ItemPageState extends State<ItemPage> {
       'savedAmount': saveObject.savedAmount,
       'startDate': Timestamp.fromDate(saveObject.startDate),
       'completeDate': Timestamp.fromDate(saveObject.completeDate),
+      'icon': saveObject.icon.icon.codePoint,
     });
   }
 
@@ -291,6 +330,7 @@ class SaveObject {
   num savedAmount;
   DateTime startDate;
   DateTime completeDate;
+  Icon icon;
 
   SaveObject({
     this.name,
@@ -300,5 +340,6 @@ class SaveObject {
     this.savedAmount,
     this.startDate,
     this.completeDate,
+    this.icon,
   });
 }

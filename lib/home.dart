@@ -107,9 +107,11 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   List<Widget> _getTabIcons(List<DocumentSnapshot> saves) {
     List<Widget> list = [];
     saves.forEach((save) {
+      if(save.data['icon'] == null)
+        save.data['icon'] = 0xe145;
       list.add(
         new GestureDetector(
-          child: new Tab(icon: new Icon(Icons.add)),
+          child: new Tab(icon: new Icon(new IconData(save.data['icon'], fontFamily: 'MaterialIcons'))),
           onLongPress: () {
             //TODO: ADD LONG PRESS ACTION ()
           },
