@@ -35,7 +35,7 @@ class _ItemPageState extends State<ItemPage> {
   @override
   Widget build(BuildContext context) {
     if(radioValue == 1)
-      saveAmountController.text = _getSaveAmount().toString();
+      saveAmountController.updateValue(_getSaveAmount());
     if(radioValue == 2)
       _dueDate = _getCompleteDate();
     var container = StateContainer.of(context);
