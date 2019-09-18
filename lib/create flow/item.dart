@@ -84,7 +84,7 @@ class _ItemPageState extends State<ItemPage> {
                         width: 200.0,
                         onChanged: (value) {
                           setState(() {
-                            itemCost = double.parse(value);
+                            itemCost = double.parse(value.substring(1));
                           });
                         },
                       ),
