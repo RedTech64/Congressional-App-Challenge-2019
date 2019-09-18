@@ -149,22 +149,27 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                           ),
 
                         ),
-                        Padding(
+                        /*Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: new Divider(
                             color: Color.fromRGBO(105,240,174,1.0),
                           ),
 
+                        ),*/
+                        new Divider(
+                          color: Color.fromRGBO(105,240,174,1.0),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Center(
-                            child: new Row(
-                              children: <Widget>[
-                                Spacer(flex: 1,),
-                                Container(
-                                  color: Color.fromRGBO(105,240,174,1.0),
-                                  padding: const EdgeInsets.all(8.0),
+                        Center(
+                          child: new Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+
+                              Container(
+                                width: 125,
+                                height: 75,
+                                color: Color.fromRGBO(105,240,174,1.0),
+                                padding: const EdgeInsets.all(8.0),
+                                child: Center(
                                   child: new Text(
                                     save.data['savedAmount'].toString(),
                                     style: new TextStyle(
@@ -176,10 +181,29 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
 
                                   ),
                                 ),
-                                Spacer(flex: 3,),
-                                Container(
-                                  color: Color.fromRGBO(105,240,174,1.0),
-                                  padding: const EdgeInsets.all(8.0),
+                              ),
+
+                              Container(
+                                color: Color.fromRGBO(255, 255, 255, 1.0),
+                                padding: const EdgeInsets.all(8.0),
+                                child: Center(
+                                  child: new Text(
+                                    "/",
+                                    style: new TextStyle(
+                                      color: Color.fromRGBO(105,240,174,1.0),
+                                      fontSize: 48.0,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ),
+
+                              Container(
+                                width: 125,
+                                height: 75,
+                                color: Color.fromRGBO(105,240,174,1.0),
+                                padding: const EdgeInsets.all(8.0),
+                                child: Center(
                                   child: new Text(
                                     save.data['cost'].toString(),
                                     style: new TextStyle(
@@ -189,28 +213,25 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                                     ),
                                   ),
                                 ),
+                              ),
 
 
-                              ],
+                            ],
 
-                            ),
                           ),
-
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: new Divider(
-                            color: Color.fromRGBO(105,240,174,1.0),
-                          ),
-
+                        new Divider(
+                          color: Color.fromRGBO(105,240,174,1.0),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Center(
                             child: new Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: <Widget>[
-                                Spacer(flex: 1,),
+
                                 Container(
+
                                   color: Color.fromRGBO(105,240,174,1.0),
                                   padding: const EdgeInsets.all(8.0),
                                   child: new Text(
@@ -224,7 +245,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
 
                                   ),
                                 ),
-                                Spacer(flex: 3,),
+
                                 Container(
                                   color: Color.fromRGBO(105,240,174,1.0),
                                   padding: const EdgeInsets.all(8.0),
@@ -242,12 +263,8 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                             ),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: new Divider(
-                            color: Color.fromRGBO(105,240,174,1.0),
-                          ),
-
+                        new Divider(
+                          color: Color.fromRGBO(105,240,174,1.0),
                         ),
                         new Placeholder(
                           fallbackWidth: 100,
