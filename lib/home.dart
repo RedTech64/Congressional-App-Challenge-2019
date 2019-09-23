@@ -163,28 +163,33 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                           child: new Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: <Widget>[
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(10.0),
+                                child: Container(
+                                  width: 100,
+                                  height: 75,
+                                  color: Color.fromRGBO(105,240,174,1.0),
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Center(
+                                    child: FittedBox(
+                                      child: new Text(
+                                        save.data['savedAmount'].toString(),
+                                        style: new TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 32.0,
+                                          fontWeight: FontWeight.bold,
+                                        ),
 
-                              Container(
-                                width: 125,
-                                height: 75,
-                                color: Color.fromRGBO(105,240,174,1.0),
-                                padding: const EdgeInsets.all(8.0),
-                                child: Center(
-                                  child: new Text(
-                                    save.data['savedAmount'].toString(),
-                                    style: new TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 32.0,
-                                      fontWeight: FontWeight.bold,
+
+                                      ),
                                     ),
-
-
                                   ),
                                 ),
                               ),
 
                               Container(
                                 color: Color.fromRGBO(255, 255, 255, 1.0),
+
                                 padding: const EdgeInsets.all(8.0),
                                 child: Center(
                                   child: new Text(
@@ -198,18 +203,23 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                                 ),
                               ),
 
-                              Container(
-                                width: 125,
-                                height: 75,
-                                color: Color.fromRGBO(105,240,174,1.0),
-                                padding: const EdgeInsets.all(8.0),
-                                child: Center(
-                                  child: new Text(
-                                    save.data['cost'].toString(),
-                                    style: new TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 32.0,
-                                      fontWeight: FontWeight.bold,
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(10.0),
+                                child: Container(
+                                  width:100,
+                                  height: 75,
+                                  color: Color.fromRGBO(105,240,174,1.0),
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Center(
+                                    child: FittedBox(
+                                      child: new Text(
+                                        save.data['cost'].toString(),
+                                        style: new TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 32.0,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -230,31 +240,47 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: <Widget>[
 
-                                Container(
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  child: Container(
+                                    width: 100,
+                                    height: 75,
 
-                                  color: Color.fromRGBO(105,240,174,1.0),
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: new Text(
-                                    save.data['dividedAmount'].toString(),
-                                    style: new TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 32.0,
-                                      fontWeight: FontWeight.bold,
+                                    color: Color.fromRGBO(105,240,174,1.0),
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Center(
+                                      child: new Text(
+                                        save.data['dividedAmount'].toString(),
+                                        style: new TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 32.0,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+
+
+                                      ),
                                     ),
-
-
                                   ),
                                 ),
 
-                                Container(
-                                  color: Color.fromRGBO(105,240,174,1.0),
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: new Text(
-                                    save.data['frequency'].toString(),
-                                    style: new TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 32.0,
-                                      fontWeight: FontWeight.bold,
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  child: Container(
+                                    width: 100,
+                                    height: 75,
+                                    color: Color.fromRGBO(105,240,174,1.0),
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Center(
+                                      child: FittedBox(
+                                        child: new Text(
+                                          save.data['frequency'].toString(),
+                                          style: new TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 32.0,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -283,4 +309,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     });
     return list;
   }
+
+
+
 }
