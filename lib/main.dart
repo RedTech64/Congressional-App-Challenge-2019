@@ -4,10 +4,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:async';
 import 'home.dart';
 import 'user_data_container.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 import 'welcome_page.dart';
 
-void main() => runApp(MyApp());
+FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
+
+void main() async {
+  flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
@@ -47,8 +53,46 @@ class _MyHomePageState extends State<MyHomePage> {
   FirebaseUser _user;
   StreamSubscription<FirebaseUser> _listener;
 
+  Future<void> _scheduleNotification() async {
+    var scheduledNotificationDateTime =
+    DateTime.now().add(Duration(seconds: 2));
+
+    var androidPlatformChannelSpecifics = AndroidNotificationDetails(
+        'your other channel id',
+        'your other channel name',
+        'your other channel description',
+        icon: 'app_icon',
+        largeIconBitmapSource: BitmapSource.Drawable,
+        enableLights: true,
+        color: const Color.fromARGB(255, 255, 0, 0),
+        ledColor: const Color.fromARGB(255, 255, 0, 0),
+        ledOnMs: 1000,
+        ledOffMs: 500);
+    var iOSPlatformChannelSpecifics =
+    IOSNotificationDetails(sound: "slow_spring_board.aiff");
+    var platformChannelSpecifics = NotificationDetails(
+        androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
+    await flutterLocalNotificationsPlugin.schedule(
+        0,
+        'scheduled title',
+        'scheduled body',
+        scheduledNotificationDateTime,
+        platformChannelSpecifics);
+  }
+
   @override
   void initState() {
+    var initializationSettingsAndroid =
+    AndroidInitializationSettings('app_icon');
+    var initializationSettingsIOS = IOSInitializationSettings(
+        onDidReceiveLocalNotification: onDidReceiveLocalNotification);
+    var initializationSettings = InitializationSettings(
+        initializationSettingsAndroid, initializationSettingsIOS);
+    flutterLocalNotificationsPlugin.initialize(initializationSettings,
+        onSelectNotification: onSelectNotification).then((value) {
+          _scheduleNotification();
+    });
+
     _checkCurrentUser().then((value) {
       getUserData(_user.uid).then((doc) {
         var container = StateContainer.of(context);
@@ -75,6 +119,25 @@ class _MyHomePageState extends State<MyHomePage> {
       });
     });
     super.initState();
+  }
+
+  Future<void> onDidReceiveLocalNotification(
+      int id, String title, String body, String payload) async {
+    // display a dialog with the notification details, tap ok to go to another page
+    await showDialog(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: Text(title),
+        content: Text(body),
+        actions: <Widget>[],
+      ),
+    );
+  }
+
+  Future<void> onSelectNotification(String payload) async {
+    if (payload != null) {
+      debugPrint('notification payload: ' + payload);
+    }
   }
 
   Future setUpNewUser(uid) {
