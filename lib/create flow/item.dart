@@ -39,6 +39,7 @@ class _ItemPageState extends State<ItemPage> {
     if(radioValue == 2)
       _dueDate = _getCompleteDate();
     var container = StateContainer.of(context);
+    print(container.user.uid);
     return Scaffold(
       appBar: new AppBar(
         iconTheme: IconThemeData(
@@ -296,6 +297,10 @@ class _ItemPageState extends State<ItemPage> {
       'startDate': Timestamp.fromDate(saveObject.startDate),
       'completeDate': Timestamp.fromDate(saveObject.completeDate),
       'icon': saveObject.icon.icon.codePoint,
+    }).then((doc) {
+      Firestore.instance.collection('users').document(uid).updateData({
+        'selectedSave': doc.documentID,
+      });
     });
   }
 
