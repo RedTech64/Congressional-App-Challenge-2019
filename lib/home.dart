@@ -87,45 +87,142 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                   )
                 ),
               ),
-              body: new SingleChildScrollView(
-                child: new Center(
-                  child: new Column(
-                    mainAxisSize: MainAxisSize.max,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: <Widget>[
-                      new Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.all(15.0),
-                          child: Card(
-                            child: Column(
-                              children: <Widget>[
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: new Text(
-                                    snapshot.data.documents[docIndex]['name'],
-                                    style: new TextStyle(
-                                      color: Color.fromRGBO(105,240,174,1.0),
-                                      fontSize: 32.0,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
-
-                                ),
-                                /*Padding(
+              body: new Center(
+                child: new Column(
+                  mainAxisSize: MainAxisSize.max,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    new Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: Card(
+                          child: Column(
+                            children: <Widget>[
+                              Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: new Divider(
-                                  color: Color.fromRGBO(105,240,174,1.0),
+                                child: new Text(
+                                  snapshot.data.documents[docIndex]['name'],
+                                  style: new TextStyle(
+                                    color: Color.fromRGBO(105,240,174,1.0),
+                                    fontSize: 32.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  textAlign: TextAlign.center,
                                 ),
 
-                              ),*/
-                                new Divider(
-                                  color: Color.fromRGBO(105,240,174,1.0),
+                              ),
+                              /*Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: new Divider(
+                                color: Color.fromRGBO(105,240,174,1.0),
+                              ),
+
+                            ),*/
+                              new Divider(
+                                color: Color.fromRGBO(105,240,174,1.0),
+                              ),
+                              Center(
+                                child: new Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  children: <Widget>[
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                      child: Container(
+                                        width: 100,
+                                        height: 75,
+                                        color: Color.fromRGBO(105,240,174,1.0),
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Center(
+                                          child: FittedBox(
+                                            child: new Text(
+                                              snapshot.data.documents[docIndex]['savedAmount'].toString(),
+                                              style: new TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 32.0,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+
+                                    Container(
+                                      color: Color.fromRGBO(255, 255, 255, 1.0),
+
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Center(
+                                        child: new Text(
+                                          "/",
+                                          style: new TextStyle(
+                                            color: Color.fromRGBO(105,240,174,1.0),
+                                            fontSize: 48.0,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                      child: Container(
+                                        width:100,
+                                        height: 75,
+                                        color: Color.fromRGBO(105,240,174,1.0),
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Center(
+                                          child: FittedBox(
+                                            child: new Text(
+                                              snapshot.data.documents[docIndex]['cost'].toString(),
+                                              style: new TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 32.0,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+
+
+                                  ],
+
                                 ),
-                                Center(
+                              ),
+                              new Divider(
+                                color: Color.fromRGBO(105,240,174,1.0),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Center(
                                   child: new Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                     children: <Widget>[
+
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.circular(10.0),
+                                        child: Container(
+                                          width: 100,
+                                          height: 75,
+
+                                          color: Color.fromRGBO(105,240,174,1.0),
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Center(
+                                            child: new Text(
+                                              snapshot.data.documents[docIndex]['dividedAmount'].toString(),
+                                              style: new TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 32.0,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+
+
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+
                                       ClipRRect(
                                         borderRadius: BorderRadius.circular(10.0),
                                         child: Container(
@@ -136,47 +233,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                                           child: Center(
                                             child: FittedBox(
                                               child: new Text(
-                                                snapshot.data.documents[docIndex]['savedAmount'].toString(),
-                                                style: new TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 32.0,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-
-
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-
-                                      Container(
-                                        color: Color.fromRGBO(255, 255, 255, 1.0),
-
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Center(
-                                          child: new Text(
-                                            "/",
-                                            style: new TextStyle(
-                                              color: Color.fromRGBO(105,240,174,1.0),
-                                              fontSize: 48.0,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-
-                                      ClipRRect(
-                                        borderRadius: BorderRadius.circular(10.0),
-                                        child: Container(
-                                          width:100,
-                                          height: 75,
-                                          color: Color.fromRGBO(105,240,174,1.0),
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Center(
-                                            child: FittedBox(
-                                              child: new Text(
-                                                snapshot.data.documents[docIndex]['cost'].toString(),
+                                                snapshot.data.documents[docIndex]['frequency'].toString(),
                                                 style: new TextStyle(
                                                   color: Colors.white,
                                                   fontSize: 32.0,
@@ -187,91 +244,30 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                                           ),
                                         ),
                                       ),
-
-
                                     ],
-
                                   ),
                                 ),
-                                new Divider(
-                                  color: Color.fromRGBO(105,240,174,1.0),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Center(
-                                    child: new Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                      children: <Widget>[
+                              ),
+                              new Divider(
+                                color: Color.fromRGBO(105,240,174,1.0),
+                              ),
+                              new RaisedButton(
+                                child: new Text("ADD AMOUNT SAVED"),
+                                onPressed: () {
+                                  _openSaveDialog(context);
+                                },
+                              ),
+                              new Placeholder(
+                                fallbackWidth: 100,
+                                fallbackHeight: 200,
+                              ),
 
-                                        ClipRRect(
-                                          borderRadius: BorderRadius.circular(10.0),
-                                          child: Container(
-                                            width: 100,
-                                            height: 75,
-
-                                            color: Color.fromRGBO(105,240,174,1.0),
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Center(
-                                              child: new Text(
-                                                snapshot.data.documents[docIndex]['dividedAmount'].toString(),
-                                                style: new TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 32.0,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-
-
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-
-                                        ClipRRect(
-                                          borderRadius: BorderRadius.circular(10.0),
-                                          child: Container(
-                                            width: 100,
-                                            height: 75,
-                                            color: Color.fromRGBO(105,240,174,1.0),
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Center(
-                                              child: FittedBox(
-                                                child: new Text(
-                                                  snapshot.data.documents[docIndex]['frequency'].toString(),
-                                                  style: new TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 32.0,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                new Divider(
-                                  color: Color.fromRGBO(105,240,174,1.0),
-                                ),
-                                new RaisedButton(
-                                  child: new Text("ADD AMOUNT SAVED"),
-                                  onPressed: () {
-                                    _openSaveDialog(context);
-                                  },
-                                ),
-                                new Placeholder(
-                                  fallbackWidth: 100,
-                                  fallbackHeight: 200,
-                                ),
-
-                              ],
-                            ),
+                            ],
                           ),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
               floatingActionButton: new FloatingActionButton(
