@@ -87,13 +87,13 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                   )
                 ),
               ),
-              body: new Center(
-                child: new Column(
-                  mainAxisSize: MainAxisSize.max,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    new Expanded(
-                      child: Padding(
+              body: new SingleChildScrollView(
+                child: new Center(
+                  child: new Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: <Widget>[
+                      new Padding(
                         padding: const EdgeInsets.all(15.0),
                         child: Card(
                           child: Column(
@@ -266,8 +266,8 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
               floatingActionButton: new FloatingActionButton(
