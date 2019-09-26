@@ -293,6 +293,32 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     );
   }
 
+  void _openSaveDialog(context) async {
+    MoneyMaskedTextController controller = new MoneyMaskedTextController(decimalSeparator: ".", thousandSeparator: ",", leftSymbol: "\$");
+    double amount = 0;
+    var result = await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return new AlertDialog(
+          title: new Text("Save Amount"),
+          content: new Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              new ThemeTextField(
+                controller: controller,
+                width: 200,
+                label: "Amount",
+                keyboardType: TextInputType.number,
+                onChanged: (value) {
+                  amount = double.parse(value.substring(1));
+                },
+              ),
+            ],
+          ),
+        );
+      }
+    );
+  }
 
   List<Widget> _getDrawerItems(List<DocumentSnapshot> saves,userID) {
     var container = StateContainer.of(context);
