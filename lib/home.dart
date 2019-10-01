@@ -38,6 +38,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                 docIndex = i;
               }
             }
+            SaveObject saveObject = new SaveObject.fromDoc(snapshot.data.documents[docIndex]);
             return new Scaffold(
               drawer: new Drawer(
                 child: new ListView(
@@ -74,8 +75,15 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                             );
                           },
                         );
-                        if(result)
-                          snapshot.data.documents[DefaultTabController.of(context).index].reference.delete();
+                        if(result) {
+                          snapshot.data.documents[docIndex].reference.delete();
+                          var newIndex = 0;
+                          if(docIndex == 0)
+                            newIndex = docIndex+1;
+                          userSnapshot.data.reference.updateData({
+                            'selectedSave': snapshot.data.documents[newIndex].documentID,
+                          });
+                        }
                       },
                     );
                   }),
@@ -101,7 +109,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: new Text(
-                                  snapshot.data.documents[docIndex]['name'],
+                                  saveObject.name,
                                   style: new TextStyle(
                                     color: Color.fromRGBO(105,240,174,1.0),
                                     fontSize: 32.0,
@@ -109,15 +117,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                                   ),
                                   textAlign: TextAlign.center,
                                 ),
-
                               ),
-                              /*Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: new Divider(
-                                color: Color.fromRGBO(105,240,174,1.0),
-                              ),
-
-                            ),*/
                               new Divider(
                                 color: Color.fromRGBO(105,240,174,1.0),
                               ),
@@ -135,7 +135,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                                         child: Center(
                                           child: FittedBox(
                                             child: new Text(
-                                              snapshot.data.documents[docIndex]['savedAmount'].toString(),
+                                              saveObject.savedAmount.toString(),
                                               style: new TextStyle(
                                                 color: Colors.white,
                                                 fontSize: 32.0,
@@ -173,7 +173,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                                         child: Center(
                                           child: FittedBox(
                                             child: new Text(
-                                              snapshot.data.documents[docIndex]['cost'].toString(),
+                                              saveObject.cost.toString(),
                                               style: new TextStyle(
                                                 color: Colors.white,
                                                 fontSize: 32.0,
@@ -184,10 +184,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                                         ),
                                       ),
                                     ),
-
-
                                   ],
-
                                 ),
                               ),
                               new Divider(
@@ -210,14 +207,12 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                                           padding: const EdgeInsets.all(8.0),
                                           child: Center(
                                             child: new Text(
-                                              snapshot.data.documents[docIndex]['dividedAmount'].toString(),
+                                              saveObject.dividedAmount.toString(),
                                               style: new TextStyle(
                                                 color: Colors.white,
                                                 fontSize: 32.0,
                                                 fontWeight: FontWeight.bold,
                                               ),
-
-
                                             ),
                                           ),
                                         ),
@@ -233,7 +228,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                                           child: Center(
                                             child: FittedBox(
                                               child: new Text(
-                                                snapshot.data.documents[docIndex]['frequency'].toString(),
+                                                saveObject.frequency.toString(),
                                                 style: new TextStyle(
                                                   color: Colors.white,
                                                   fontSize: 32.0,
@@ -254,6 +249,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                               new RaisedButton(
                                 child: new Text("ADD AMOUNT SAVED"),
                                 onPressed: () {
+                                  _getSuggestedSave(saveObject);
                                   _openSaveDialog(context);
                                 },
                               ),
@@ -261,7 +257,6 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                                 fallbackWidth: 100,
                                 fallbackHeight: 200,
                               ),
-
                             ],
                           ),
                         ),
@@ -285,8 +280,13 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
             );
           }
         );
-    },
+      },
     );
+  }
+
+  double _getSuggestedSave(SaveObject save) {
+    print(save.startDate);
+    return 0;
   }
 
   void _openSaveDialog(context) async {
