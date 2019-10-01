@@ -347,4 +347,17 @@ class SaveObject {
     this.completeDate,
     this.icon,
   });
+
+  factory SaveObject.fromDoc(DocumentSnapshot doc) {
+    return SaveObject(
+      name: doc.data['name'],
+      cost: doc.data['cost'],
+      frequency: doc.data['frequency'],
+      dividedAmount: doc.data['dividedAmount'],
+      savedAmount: doc.data['savedAmount'],
+      startDate: doc.data['startDate'].toDate(),
+      completeDate: doc.data['completeDate'].toDate(),
+      icon: new Icon(IconData(doc.data['icon'], fontFamily: 'MaterialIcons')),
+    );
+  }
 }
