@@ -51,20 +51,42 @@ class _WelcomePageState extends State<WelcomePage> {
             )
           );
         },
+
         child: Padding(
           padding: const EdgeInsets.all(8.0),
 
           child: new Center(
             child: new Column(
+
               mainAxisAlignment: MainAxisAlignment.center,
+
+
               children: <Widget>[
                 new Spacer(flex: 4),
-
-                new Placeholder(
-                  fallbackWidth: 100,
-                  fallbackHeight: 200,
+                new Image(
+                    image: AssetImage(("assets/saguaro-logo2.png")),
+                    height: 200,
+                    width: 200,
                 ),
-                new Spacer(flex: 2,),
+
+
+                // ...
+                new Spacer(flex: 1,),
+
+                new Text(
+                    'saguaro',
+                    style: new TextStyle(
+                      color: Color.fromRGBO(255,255,255, 1.0),
+                      fontSize: 48.0,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Comfortaa',
+
+                    )
+
+                ),
+
+                new Spacer(flex: 1,),
+
                 new Text(
                   'Welcome',
                   style: new TextStyle(
@@ -73,6 +95,7 @@ class _WelcomePageState extends State<WelcomePage> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
+                new Spacer(flex: 1,),
                 new Text(
                   'In the 1960s, the U.S. savings rate was well above 10%',
                   style: new TextStyle(
@@ -92,7 +115,16 @@ class _WelcomePageState extends State<WelcomePage> {
                   ),
                   textAlign: TextAlign.center,
                 ),
-                new Spacer(flex: 1,),
+                new Spacer(flex: 2,),
+                new Text(
+                  '< < < Swipe to get started > > >',
+                  style: new TextStyle(
+                    color: Colors.white,
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+
+                  ),
+                ),
 
                 new Spacer(flex: 5,),
               ],
