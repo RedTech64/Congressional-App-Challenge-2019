@@ -250,7 +250,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                                 child: new Text("ADD AMOUNT SAVED"),
                                 onPressed: () {
                                   _getSuggestedSave(saveObject);
-                                  _openSaveDialog(context);
+                                  _openSaveDialog(context,saveObject);
                                 },
                               ),
                               new Placeholder(
@@ -285,13 +285,21 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   }
 
   double _getSuggestedSave(SaveObject save) {
-    print(save.startDate);
-    return 0;
+    Duration difference = DateTime.now().difference(save.startDate);
+    int days = difference.inDays;
+    int saveTimes = (days/save.frequency).floor();
+    double projectedAmount = saveTimes*save.dividedAmount;
+    double autoFillAmount = projectedAmount - save.savedAmount;
+    print(days);
+    print(saveTimes);
+    if(autoFillAmount < 0) autoFillAmount == 0;
+    return autoFillAmount;
   }
 
-  void _openSaveDialog(context) async {
+  void _openSaveDialog(context,save) async {
     MoneyMaskedTextController controller = new MoneyMaskedTextController(decimalSeparator: ".", thousandSeparator: ",", leftSymbol: "\$");
-    double amount = 0;
+    double amount = _getSuggestedSave(save);
+    controller.updateValue(amount);
     var result = await showDialog(
       context: context,
       builder: (BuildContext context) {
