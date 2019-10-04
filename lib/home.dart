@@ -250,7 +250,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                                 child: new Text("ADD AMOUNT SAVED"),
                                 onPressed: () {
                                   _getSuggestedSave(saveObject);
-                                  _openSaveDialog(context,saveObject);
+                                  _openSaveDialog(context,saveObject,snapshot.data.documents[docIndex].documentID);
                                 },
                               ),
                               new Placeholder(
@@ -290,21 +290,33 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     int saveTimes = (days/save.frequency).floor();
     double projectedAmount = saveTimes*save.dividedAmount;
     double autoFillAmount = projectedAmount - save.savedAmount;
-    print(days);
-    print(saveTimes);
-    if(autoFillAmount < 0) autoFillAmount == 0;
+    if(autoFillAmount < 0) autoFillAmount = 0;
     return autoFillAmount;
   }
 
-  void _openSaveDialog(context,save) async {
+  void _openSaveDialog(context,SaveObject save,docID) async {
     MoneyMaskedTextController controller = new MoneyMaskedTextController(decimalSeparator: ".", thousandSeparator: ",", leftSymbol: "\$");
     double amount = _getSuggestedSave(save);
     controller.updateValue(amount);
-    var result = await showDialog(
+    double result = await showDialog(
       context: context,
       builder: (BuildContext context) {
         return new AlertDialog(
           title: new Text("Save Amount"),
+          actions: <Widget>[
+            FlatButton(
+              child: new Text("CANCEL"),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+            FlatButton(
+              child: new Text("SAVE"),
+              onPressed: () {
+                Navigator.of(context).pop(amount);
+              },
+            ),
+          ],
           content: new Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
@@ -314,7 +326,8 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                 label: "Amount",
                 keyboardType: TextInputType.number,
                 onChanged: (value) {
-                  amount = double.parse(value.substring(1));
+                  print(value);
+                  amount = double.parse(value.substring(1))*10;
                 },
               ),
             ],
@@ -322,6 +335,11 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
         );
       }
     );
+    print(amount);
+    var container = StateContainer.of(context);
+    Firestore.instance.collection('users').document(container.user.uid).collection('saves').document(docID).updateData({
+      'savedAmount': save.savedAmount+amount,
+    });
   }
 
   List<Widget> _getDrawerItems(List<DocumentSnapshot> saves,userID) {
