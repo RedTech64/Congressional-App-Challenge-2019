@@ -84,8 +84,9 @@ class _ItemPageState extends State<ItemPage> {
                         label: 'Item Cost',
                         width: 200.0,
                         onChanged: (value) {
+                          print(value);
                           setState(() {
-                            itemCost = double.parse(value.substring(1));
+                            itemCost = double.parse(value.substring(1)*10);
                           });
                         },
                       ),
@@ -246,7 +247,7 @@ class _ItemPageState extends State<ItemPage> {
                             width: 200,
                             onChanged: (value) {
                               setState(() {
-                                dividedAmount = double.parse(value);
+                                dividedAmount = double.parse(value.substring(1)*10);
                               });
                             },
                           ),
