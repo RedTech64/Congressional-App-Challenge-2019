@@ -17,7 +17,7 @@ package="com.redtech.cac_2019">
      FlutterApplication and put your custom class here. -->
 <application
     android:name="io.flutter.app.FlutterApplication"
-    android:label="flutter_local_notifications_example"
+    android:label="Saguaro"
     android:icon="@mipmap/ic_launcher">
     <activity
         android:name=".MainActivity"
@@ -36,6 +36,10 @@ package="com.redtech.cac_2019">
         <intent-filter>
             <action android:name="android.intent.action.MAIN"/>
             <category android:name="android.intent.category.LAUNCHER"/>
+        </intent-filter>
+        <intent-filter>
+            <action android:name="FLUTTER_NOTIFICATION_CLICK" />
+            <category android:name="android.intent.category.DEFAULT" />
         </intent-filter>
     </activity>
     <receiver android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationReceiver" />
