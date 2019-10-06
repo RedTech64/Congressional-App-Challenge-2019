@@ -5,6 +5,7 @@ import 'selection_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cac_2019/user_data_container.dart';
 import 'package:flutter_masked_text/flutter_masked_text.dart';
+import 'package:cac_2019/save_object.dart';
 
 class ItemPage extends StatefulWidget {
   @override
@@ -324,41 +325,5 @@ class _ItemPageState extends State<ItemPage> {
       saveTimes = itemCost~/dividedAmount;
     Duration gap = new Duration(days: frequency);
     return new DateTime.now().add(new Duration(days: gap.inDays*saveTimes));
-  }
-}
-
-
-class SaveObject {
-  String name;
-  num cost;
-  int frequency;
-  num dividedAmount;
-  num savedAmount;
-  DateTime startDate;
-  DateTime completeDate;
-  Icon icon;
-
-  SaveObject({
-    this.name,
-    this.cost,
-    this.frequency,
-    this.dividedAmount,
-    this.savedAmount,
-    this.startDate,
-    this.completeDate,
-    this.icon,
-  });
-
-  factory SaveObject.fromDoc(DocumentSnapshot doc) {
-    return SaveObject(
-      name: doc.data['name'],
-      cost: doc.data['cost'],
-      frequency: doc.data['frequency'],
-      dividedAmount: doc.data['dividedAmount'],
-      savedAmount: doc.data['savedAmount'],
-      startDate: doc.data['startDate'].toDate(),
-      completeDate: doc.data['completeDate'].toDate(),
-      icon: new Icon(IconData(doc.data['icon'], fontFamily: 'MaterialIcons')),
-    );
   }
 }
