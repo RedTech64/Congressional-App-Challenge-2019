@@ -4,14 +4,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:async';
 import 'home.dart';
 import 'user_data_container.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 import 'welcome_page.dart';
 
-FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
 
 void main() async {
-  flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
   runApp(MyApp());
 }
 
@@ -52,46 +50,22 @@ class _MyHomePageState extends State<MyHomePage> {
   bool _ready = false;
   FirebaseUser _user;
   StreamSubscription<FirebaseUser> _listener;
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
 
-  Future<void> _scheduleNotification() async {
-    var scheduledNotificationDateTime =
-    DateTime.now().add(Duration(seconds: 2));
-
-    var androidPlatformChannelSpecifics = AndroidNotificationDetails(
-        'your other channel id',
-        'your other channel name',
-        'your other channel description',
-        icon: 'app_icon',
-        largeIconBitmapSource: BitmapSource.Drawable,
-        enableLights: true,
-        color: const Color.fromARGB(255, 255, 0, 0),
-        ledColor: const Color.fromARGB(255, 255, 0, 0),
-        ledOnMs: 1000,
-        ledOffMs: 500);
-    var iOSPlatformChannelSpecifics =
-    IOSNotificationDetails(sound: "slow_spring_board.aiff");
-    var platformChannelSpecifics = NotificationDetails(
-        androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
-    await flutterLocalNotificationsPlugin.schedule(
-        0,
-        'scheduled title',
-        'scheduled body',
-        scheduledNotificationDateTime,
-        platformChannelSpecifics);
-  }
 
   @override
   void initState() {
-    var initializationSettingsAndroid =
-    AndroidInitializationSettings('app_icon');
-    var initializationSettingsIOS = IOSInitializationSettings(
-        onDidReceiveLocalNotification: onDidReceiveLocalNotification);
-    var initializationSettings = InitializationSettings(
-        initializationSettingsAndroid, initializationSettingsIOS);
-    flutterLocalNotificationsPlugin.initialize(initializationSettings,
-        onSelectNotification: onSelectNotification).then((value) {
-          _scheduleNotification();
-    });
+    _firebaseMessaging.configure(
+      onMessage: (Map<String, dynamic> message) async {
+        print(message);
+      },
+      onLaunch: (Map<String, dynamic> message) async {
+        print(message);
+      },
+      onResume: (Map<String, dynamic> message) async {
+        print(message);
+      },
+    );
 
     _checkCurrentUser().then((value) {
       getUserData(_user.uid).then((doc) {
@@ -141,8 +115,11 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Future setUpNewUser(uid) {
-    return Firestore.instance.collection('users').document(uid).setData({
-      'id': uid,
+    return _firebaseMessaging.getToken().then((String token) {
+      Firestore.instance.collection('users').document(uid).setData({
+        'id': uid,
+        'fcmToken': token,
+      });
     });
   }
 
@@ -188,12 +165,4 @@ class _MyHomePageState extends State<MyHomePage> {
     }
     return new HomePage();
   }
-}
-
-enum Frequency {
-  daily,
-  weekly,
-  biweekly,
-  monthly,
-  bimonthly,
 }

@@ -292,6 +292,7 @@ class _ItemPageState extends State<ItemPage> {
     );
   }
   addSaveObject(SaveObject saveObject,uid) {
+    DateTime nextPayment = getNextPaymentDate(saveObject);
     Firestore.instance.collection('users').document(uid).collection('saves').add({
       'name': saveObject.name,
       'cost': saveObject.cost,
@@ -301,10 +302,7 @@ class _ItemPageState extends State<ItemPage> {
       'startDate': Timestamp.fromDate(saveObject.startDate),
       'completeDate': Timestamp.fromDate(saveObject.completeDate),
       'icon': saveObject.icon.icon.codePoint,
-    }).then((doc) {
-      Firestore.instance.collection('users').document(uid).updateData({
-        'selectedSave': doc.documentID,
-      });
+      'nextReminder': Timestamp.fromDate(nextPayment),
     });
   }
 
