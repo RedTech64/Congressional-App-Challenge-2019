@@ -35,8 +35,10 @@ class _ItemPageState extends State<ItemPage> {
 
   @override
   Widget build(BuildContext context) {
-    if(radioValue == 1)
+    if(radioValue == 1) {
       saveAmountController.updateValue(_getSaveAmount());
+      dividedAmount = double.parse(_getSaveAmount().toStringAsFixed(2));
+    }
     if(radioValue == 2)
       _dueDate = _getCompleteDate();
     var container = StateContainer.of(context);
@@ -87,7 +89,7 @@ class _ItemPageState extends State<ItemPage> {
                         onChanged: (value) {
                           print(value);
                           setState(() {
-                            itemCost = double.parse(value.substring(1)*10);
+                            itemCost = double.parse(value.substring(1))*10;
                           });
                         },
                       ),
@@ -248,7 +250,7 @@ class _ItemPageState extends State<ItemPage> {
                             width: 200,
                             onChanged: (value) {
                               setState(() {
-                                dividedAmount = double.parse(value.substring(1)*10);
+                                dividedAmount = double.parse(value.substring(1))*10;
                               });
                             },
                           ),
