@@ -24,7 +24,6 @@ class MyApp extends StatelessWidget {
           canvasColor: Color.fromRGBO(255,255,255,1.0),
           buttonColor: Color.fromRGBO(105,240,174,1.0),
 
-
           floatingActionButtonTheme: new FloatingActionButtonThemeData(
             backgroundColor: Color.fromRGBO(105,240,174,1.0),
           )

@@ -10,6 +10,7 @@ class SaveObject {
   DateTime startDate;
   DateTime completeDate;
   Icon icon;
+  List<SaveData> saveData;
 
   SaveObject({
     this.name,
@@ -20,9 +21,15 @@ class SaveObject {
     this.startDate,
     this.completeDate,
     this.icon,
+    this.saveData,
   });
 
   factory SaveObject.fromDoc(DocumentSnapshot doc) {
+    List<SaveData> saveData = [];
+    if(doc.data['saveData'] != null)
+      doc.data['saveData'].forEach((data) {
+        saveData.add(new SaveData(amount: data['amount'], date: data['date'].toDate(), saveDay: data['saveDay'], total: data['total']));
+      });
     return SaveObject(
       name: doc.data['name'],
       cost: doc.data['cost'],
@@ -32,18 +39,38 @@ class SaveObject {
       startDate: doc.data['startDate'].toDate(),
       completeDate: doc.data['completeDate'].toDate(),
       icon: new Icon(IconData(doc.data['icon'], fontFamily: 'MaterialIcons')),
+      saveData: saveData,
     );
   }
+}
+
+class SaveData {
+  DateTime date;
+  num amount;
+  num total;
+  bool saveDay;
+
+  SaveData({
+    this.date,
+    this.amount,
+    this.total,
+    this.saveDay
+  });
 }
 
 DateTime getNextPaymentDate(SaveObject saveObject) {
   double projectedSave = 0;
   DateTime nextPayment = saveObject.startDate;
-  while(projectedSave < saveObject.savedAmount) {
+  while(projectedSave <= saveObject.savedAmount) {
     nextPayment = nextPayment.add(new Duration(days: saveObject.frequency));
     projectedSave += saveObject.dividedAmount;
   }
   return nextPayment;
+}
+
+double getProjectedSave(SaveObject saveObject, DateTime date) {
+  int days = date.difference(saveObject.startDate).inDays;
+  return (days/saveObject.frequency)*saveObject.dividedAmount;
 }
 
 String getNextPaymentDateFormatted(saveObject) {

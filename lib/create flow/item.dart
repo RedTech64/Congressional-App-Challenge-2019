@@ -303,6 +303,7 @@ class _ItemPageState extends State<ItemPage> {
       'completeDate': Timestamp.fromDate(saveObject.completeDate),
       'icon': saveObject.icon.icon.codePoint,
       'nextReminder': Timestamp.fromDate(nextPayment),
+      'saveData': [],
     });
   }
 

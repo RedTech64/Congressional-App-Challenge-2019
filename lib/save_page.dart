@@ -15,6 +15,7 @@ class SavePage extends StatefulWidget {
 
 class _SavePageState extends State<SavePage> {
   DocumentReference saveDocRef;
+  int futureShown = 3;
   _SavePageState(this.saveDocRef);
 
   @override
@@ -69,74 +70,94 @@ class _SavePageState extends State<SavePage> {
                   )
               ),
             ),
-            body: new Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                new Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Card(
-                    elevation: 5,
-                    child: Column(
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: new Text(
-                            saveObject.name,
-                            style: new TextStyle(
-                              fontSize: 32.0,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                        new Divider(height: 0,),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: new Text(
-                            ((saveObject.savedAmount/saveObject.cost)*100).toStringAsFixed(0)+"%",
-                            style: new TextStyle(
-                              fontSize: 36,
+            body: new SingleChildScrollView(
+              child: new Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  new Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Card(
+                      elevation: 5,
+                      child: Column(
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: new Text(
+                              saveObject.name,
+                              style: new TextStyle(
+                                fontSize: 32.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              textAlign: TextAlign.center,
                             ),
                           ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                          child: Container(
-                            height: 10,
-                            child: new ClipRRect(
-                              borderRadius: BorderRadius.circular(10),
-                              child: new LinearProgressIndicator(
-                                backgroundColor: Colors.grey[300],
-                                valueColor: new AlwaysStoppedAnimation(new Color.fromRGBO(105,240,174,1.0)),
-                                value: saveObject.savedAmount/saveObject.cost,
+                          new Divider(height: 0,),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: new Text(
+                              ((saveObject.savedAmount/saveObject.cost)*100).toStringAsFixed(0)+"%",
+                              style: new TextStyle(
+                                fontSize: 36,
                               ),
                             ),
                           ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: new Text(
-                            moneyFormat(saveObject.savedAmount)+" out of "+moneyFormat(saveObject.cost),
-                            style: new TextStyle(
-                              fontSize: 16,
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                            child: Container(
+                              height: 10,
+                              child: new ClipRRect(
+                                borderRadius: BorderRadius.circular(10),
+                                child: new LinearProgressIndicator(
+                                  backgroundColor: Colors.grey[300],
+                                  valueColor: new AlwaysStoppedAnimation(new Color.fromRGBO(105,240,174,1.0)),
+                                  value: saveObject.savedAmount/saveObject.cost,
+                                ),
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: new Text(
+                              moneyFormat(saveObject.savedAmount)+" out of "+moneyFormat(saveObject.cost),
+                              style: new TextStyle(
+                                fontSize: 16,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: new Card(
-                    elevation: 5,
-                    child: new Column(
-                      children: <Widget>[
-                      ],
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: new Card(
+                      child: new Row(
+                        children: <Widget>[
+                          
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: new Card(
+                      elevation: 5,
+                      child: new Column(
+                        children: <Widget>[
+                          new DataTable(
+                            columns: [
+                              new DataColumn(label: new Text('Date')),
+                              new DataColumn(label: new Text('Saved')),
+                              new DataColumn(label: new Text('Total'))
+                            ],
+                            rows: _getDataRows(saveObject),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
             floatingActionButton: new FloatingActionButton.extended(
               label: new Text("Save"),
@@ -150,14 +171,63 @@ class _SavePageState extends State<SavePage> {
     );
   }
 
+  List<DataRow> _getDataRows(SaveObject saveObject) {
+    List<DataRow> list = [];
+    List<SaveData> saveData = saveObject.saveData;
+    saveData.forEach((data) {
+      list.add(
+        new DataRow(
+          cells: [
+            new DataCell(new Text("${data.date.month}/${data.date.day}/${data.date.year}")),
+            new DataCell(new Text("\$"+data.amount.toStringAsFixed(2))),
+            new DataCell(new Text("\$"+data.total.toStringAsFixed(2))),
+          ],
+        )
+      );
+    });
+    List<DateTime> futureSaveData = _getFutureSaveDays(saveObject).getRange(0, futureShown).toList();
+    int savedSize = list.length;
+    for(DateTime date in futureSaveData) {
+      
+      list.add(
+        new DataRow(
+          cells: [
+            new DataCell(new Text("${date.month}/${date.day}/${date.year}")),
+            if(list.length == savedSize)
+              new DataCell(new Text("\$"+_getSuggestedSave(saveObject, date).toStringAsFixed(2))),
+            if(list.length != savedSize)
+              new DataCell(new Text("\$"+saveObject.dividedAmount.toStringAsFixed(2))),
+            new DataCell(new Text("\$"+getProjectedSave(saveObject, date).toStringAsFixed(2))),
+          ],
+        ),
+      );
+    }
+    return list;
+  }
+
+  List<DateTime> _getFutureSaveDays(SaveObject saveObject) {
+    List<DateTime> saveDays = [];
+    DateTime date = getNextPaymentDate(saveObject);
+    print(saveObject.completeDate.toString());
+    print(date.compareTo(saveObject.completeDate));
+    while(date.compareTo(saveObject.completeDate) < 0) {
+      saveDays.add(date);
+      date = date.add(new Duration(days: saveObject.frequency));
+    }
+    return saveDays;
+  }
+
   String moneyFormat(num) {
     return "\$"+num.toStringAsFixed(2);
   }
 
-  double _getSuggestedSave(SaveObject save) {
-    Duration difference = DateTime.now().difference(save.startDate);
+  double _getSuggestedSave(SaveObject save,DateTime date) {
+    Duration difference = date.difference(save.startDate);
     int days = difference.inDays;
+    if(days == 0 && date.day == save.startDate.day)
+      days = 1;
     int saveTimes = (days/save.frequency).floor();
+    print(days/save.frequency);
     double projectedAmount = saveTimes*save.dividedAmount;
     double autoFillAmount = projectedAmount - save.savedAmount;
     if(autoFillAmount < 0) autoFillAmount = 0;
@@ -166,7 +236,7 @@ class _SavePageState extends State<SavePage> {
 
   void _openSaveDialog(context,SaveObject saveObject) async {
     MoneyMaskedTextController controller = new MoneyMaskedTextController(decimalSeparator: ".", thousandSeparator: ",", leftSymbol: "\$");
-    double amount = _getSuggestedSave(saveObject);
+    double amount = _getSuggestedSave(saveObject,new DateTime.now());
     controller.updateValue(amount);
     double result = await showDialog(
         context: context,
@@ -196,7 +266,6 @@ class _SavePageState extends State<SavePage> {
                   label: "Amount",
                   keyboardType: TextInputType.number,
                   onChanged: (value) {
-                    print(value);
                     amount = double.parse(value.substring(1))*10;
                   },
                 ),
@@ -208,6 +277,12 @@ class _SavePageState extends State<SavePage> {
     if(result != null && result != 0) {
       DateTime nextPayment = getNextPaymentDate(saveObject);
       saveDocRef.updateData({
+        'saveData': FieldValue.arrayUnion([{
+          'date': Timestamp.fromDate(DateTime.now()),
+          'amount': amount,
+          'total': saveObject.savedAmount+amount,
+          //TODO: Save day bool
+        }]),
         'nextPayment': Timestamp.fromDate(nextPayment),
         'savedAmount': saveObject.savedAmount+amount,
       });
