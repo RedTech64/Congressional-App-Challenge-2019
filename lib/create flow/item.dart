@@ -20,8 +20,8 @@ class _ItemPageState extends State<ItemPage> {
   double itemCost = 100.0;
   double dividedAmount = 1.0;
   int radioValue = 2;
-  DateTime _dueDate = new DateTime.now();
-  DateTime _startDate = new DateTime.now();
+  DateTime _dueDate = new DateTime(DateTime.now().year,DateTime.now().month,DateTime.now().day);
+  DateTime _startDate = new DateTime(DateTime.now().year,DateTime.now().month,DateTime.now().day);
   int frequency = 7;
   Icon icon = new Icon(Icons.add);
 
@@ -138,7 +138,7 @@ class _ItemPageState extends State<ItemPage> {
                               );
                               if(result != null) {
                                 setState(() {
-                                  _startDate = result;
+                                  _startDate = new DateTime(result.year,result.month,result.day);
                                 });
                               }
                             },
@@ -221,7 +221,7 @@ class _ItemPageState extends State<ItemPage> {
                               );
                               if(result != null) {
                                 setState(() {
-                                  _dueDate = result;
+                                  _dueDate = new DateTime(result.year,result.month,result.day);
                                 });
                               }
                             },
@@ -325,6 +325,7 @@ class _ItemPageState extends State<ItemPage> {
     if(dividedAmount > 0)
       saveTimes = itemCost~/dividedAmount;
     Duration gap = new Duration(days: frequency);
-    return new DateTime.now().add(new Duration(days: gap.inDays*saveTimes));
+    DateTime withTime = DateTime.now().add(new Duration(days: gap.inDays*saveTimes));
+    return new DateTime(withTime.year,withTime.month,withTime.day);
   }
 }

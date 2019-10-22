@@ -61,10 +61,11 @@ class SaveData {
 DateTime getNextPaymentDate(SaveObject saveObject) {
   double projectedSave = 0;
   DateTime nextPayment = saveObject.startDate;
-  while(projectedSave <= saveObject.savedAmount) {
+  while(projectedSave < saveObject.savedAmount) {
     nextPayment = nextPayment.add(new Duration(days: saveObject.frequency));
     projectedSave += saveObject.dividedAmount;
   }
+  print(saveObject.startDate.toString());
   return nextPayment;
 }
 

@@ -131,9 +131,24 @@ class _SavePageState extends State<SavePage> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: new Card(
-                      child: new Row(
+                      elevation: 5,
+                      child: new Column(
                         children: <Widget>[
-                          
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: new SimpleText("Info", size: 16, bold: true,),
+                          ),
+                          new Divider(height: 0,),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              children: <Widget>[
+                                new Text("Start Date: ${saveObject.startDate.month}/${saveObject.startDate.day}/${saveObject.startDate.year}"),
+                                new Text("Complete Date: ${saveObject.completeDate.month}/${saveObject.completeDate.day}/${saveObject.completeDate.year}"),
+                                new Text("Plan: Save \$${saveObject.dividedAmount}, every ${saveObject.frequency} days."),
+                              ],
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -144,6 +159,11 @@ class _SavePageState extends State<SavePage> {
                       elevation: 5,
                       child: new Column(
                         children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: new SimpleText("Saves", size: 16, bold: true,),
+                          ),
+                          new Divider(height: 0,),
                           new DataTable(
                             columns: [
                               new DataColumn(label: new Text('Date')),
@@ -151,6 +171,14 @@ class _SavePageState extends State<SavePage> {
                               new DataColumn(label: new Text('Total'))
                             ],
                             rows: _getDataRows(saveObject),
+                          ),
+                          new IconButton(
+                            icon: new Icon(Icons.add),
+                            onPressed: () {
+                              setState(() {
+                                futureShown = futureShown+3;
+                              });
+                            },
                           ),
                         ],
                       ),
@@ -185,7 +213,10 @@ class _SavePageState extends State<SavePage> {
         )
       );
     });
-    List<DateTime> futureSaveData = _getFutureSaveDays(saveObject).getRange(0, futureShown).toList();
+    List<DateTime> futureSaveDays = _getFutureSaveDays(saveObject);
+    if(futureShown > futureSaveDays.length)
+      futureShown = futureSaveDays.length;
+    List<DateTime> futureSaveData = futureSaveDays.getRange(0, futureShown).toList();
     int savedSize = list.length;
     for(DateTime date in futureSaveData) {
       

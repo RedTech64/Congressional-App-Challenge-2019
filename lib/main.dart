@@ -80,11 +80,6 @@ class _MyHomePageState extends State<MyHomePage> {
             });
           });
         } else {
-
-          //TODO: REMOVE
-          Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) {
-            return new WelcomePage();
-          }));
           setState(() {
             _ready = true;
           });
