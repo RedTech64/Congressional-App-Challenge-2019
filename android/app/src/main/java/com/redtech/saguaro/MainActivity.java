@@ -1,4 +1,4 @@
-package com.redtech.sagauro;
+package com.redtech.saguaro;
 
 import android.os.Bundle;
 import io.flutter.app.FlutterActivity;
