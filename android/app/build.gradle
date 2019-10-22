@@ -39,7 +39,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "com.redtech.cac_2019"
+        applicationId "com.redtech.saguaro"
         minSdkVersion 16
         targetSdkVersion 28
         multiDexEnabled true
@@ -53,7 +53,7 @@ android {
             keyAlias keystoreProperties['keyAlias']
             keyPassword keystoreProperties['keyPassword']
             storeFile file(keystoreProperties['storeFile'])
-            storePassword keystoreProperties['storePassword']
+            storePassword keystoreProperties['storePassword']6
         }
     }
     buildTypes {

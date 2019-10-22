@@ -8,12 +8,20 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:330076385873:android:924ce9e3145fbbfe",
+        "mobilesdk_app_id": "1:330076385873:android:4fd4867d9917257a22be70",
         "android_client_info": {
           "package_name": "com.redtech.saguaro"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "330076385873-8vcmnsmmttll6be6llni707ie11ujuc9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.redtech.saguaro",
+            "certificate_hash": "0c9566f502ef005e40da536868c2855293ad59a8"
+          }
+        },
         {
           "client_id": "330076385873-trk8anp3m88o6n90rocc72qivp85fdta.apps.googleusercontent.com",
           "client_type": 3
