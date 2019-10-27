@@ -24,10 +24,11 @@ class _SavePageState extends State<SavePage> {
     return StreamBuilder<DocumentSnapshot>(
         stream: saveDocRef.snapshots(),
         builder: (context, snapshot) {
-          if(snapshot == null || snapshot.data == null)
+          if(snapshot == null || snapshot.data == null || snapshot.data.data == null)
             return new Scaffold(
               body: new Container(),
             );
+          print(snapshot.data.data);
           SaveObject saveObject = new SaveObject.fromDoc(snapshot.data);
           return new Scaffold(
             appBar: new AppBar(
@@ -56,8 +57,8 @@ class _SavePageState extends State<SavePage> {
                         },
                       );
                       if(result) {
-                        snapshot.data.reference.delete();
                         Navigator.pop(context);
+                        snapshot.data.reference.delete();
                       }
                     },
                   );

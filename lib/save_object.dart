@@ -26,7 +26,7 @@ class SaveObject {
 
   factory SaveObject.fromDoc(DocumentSnapshot doc) {
     List<SaveData> saveData = [];
-    if(doc.data['saveData'] != null)
+    if(doc.data != null && doc.data['saveData'] != null)
       doc.data['saveData'].forEach((data) {
         saveData.add(new SaveData(amount: data['amount'], date: data['date'].toDate(), saveDay: data['saveDay'], total: data['total']));
       });

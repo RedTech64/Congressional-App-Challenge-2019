@@ -210,15 +210,18 @@ class _ItemPageState extends State<ItemPage> {
                         children: <Widget>[
                           new SimpleText("Save by: ", bold: true, size: 20,),
                           new SimpleText("${_dueDate.month}/${_dueDate.day}/${_dueDate.year}", bold: false, size: 20,),
-                          new IconButton(
-                            icon: new Icon(Icons.edit),
-                            onPressed: () async {
-                              DateTime result = await showDatePicker(
-                                initialDate: _dueDate,
-                                firstDate: DateTime.utc(_startDate.year, _startDate.month, _startDate.day),
-                                lastDate: DateTime(2200),
-                                context: context,
-                              );
+                          if(radioValue == 1)
+                            new IconButton(icon: new Icon(Icons.edit), disabledColor: Colors.white,),
+                          if(radioValue == 2)
+                            new IconButton(
+                              icon: new Icon(Icons.edit),
+                              onPressed: () async {
+                                DateTime result = await showDatePicker(
+                                  initialDate: _dueDate,
+                                  firstDate: DateTime.utc(_startDate.year, _startDate.month, _startDate.day),
+                                  lastDate: DateTime(2200),
+                                  context: context,
+                                );
                               if(result != null) {
                                 setState(() {
                                   _dueDate = new DateTime(result.year,result.month,result.day);
@@ -326,6 +329,7 @@ class _ItemPageState extends State<ItemPage> {
       saveTimes = itemCost~/dividedAmount;
     Duration gap = new Duration(days: frequency);
     DateTime withTime = DateTime.now().add(new Duration(days: gap.inDays*saveTimes));
+    print(withTime.toString());
     return new DateTime(withTime.year,withTime.month,withTime.day);
   }
 }
