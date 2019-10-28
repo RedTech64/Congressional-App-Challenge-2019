@@ -113,6 +113,7 @@ class _MyHomePageState extends State<MyHomePage> {
       Firestore.instance.collection('users').document(uid).setData({
         'id': uid,
         'fcmToken': token,
+        'totalSaved': 0,
       });
     });
   }

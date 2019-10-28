@@ -63,16 +63,33 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                     ];
                   },
                   body: new ListView.builder(
-                    itemCount: saveDocs.data.documents.length,
+                    shrinkWrap: true,
+                    itemCount: saveDocs.data.documents.length+1,
                     itemBuilder: (context,index) {
-                      SaveObject saveObject = new SaveObject.fromDoc(saveDocs.data.documents[index]);
+                      if(index == 0) {
+                        return new Card(
+                          elevation: 5,
+                          child: new Column(
+                            children: <Widget>[
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: new SimpleText("Hello, Cole!", size: 24.0, bold: true,),
+                              ),
+                              new Divider(height: 0,),
+                              new SimpleText("Due Today: \$${_getDueToday(saveDocs).toStringAsFixed(2)}", size: 16, bold: false,),
+                              Center(child: new SimpleText("Total Saved: \$${userSnapshot.data['totalSaved'].toStringAsFixed(2)}", size: 16, bold: false,)),
+                            ],
+                          ),
+                        );
+                      }
+                      SaveObject saveObject = new SaveObject.fromDoc(saveDocs.data.documents[index-1]);
                       return new Card(
                         elevation: 5,
                         child: new InkWell(
                           onTap: () {
                             Navigator.push(context, new MaterialPageRoute(
                                 builder: (BuildContext context) {
-                                  return new SavePage(saveDocs.data.documents[index].reference);
+                                  return new SavePage(saveDocs.data.documents[index-1].reference);
                                 }
                             ));
                           },
@@ -146,6 +163,15 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
         );
       },
     );
+  }
+
+  double _getDueToday(saveDocs) {
+    double total = 0;
+    saveDocs.data.documents.forEach((doc) {
+      SaveObject saveObject = new SaveObject.fromDoc(doc);
+      total += getSuggestedSave(saveObject, DateTime.now());
+    });
+    return total;
   }
 
   Widget _getTimeIndicator(SaveObject saveObject) {

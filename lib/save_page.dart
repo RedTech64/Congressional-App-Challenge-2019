@@ -226,7 +226,7 @@ class _SavePageState extends State<SavePage> {
           cells: [
             new DataCell(new Text("${date.month}/${date.day}/${date.year}")),
             if(list.length == savedSize)
-              new DataCell(new Text("\$"+_getSuggestedSave(saveObject, date).toStringAsFixed(2))),
+              new DataCell(new Text("\$"+getSuggestedSave(saveObject, date).toStringAsFixed(2))),
             if(list.length != savedSize)
               new DataCell(new Text("\$"+saveObject.dividedAmount.toStringAsFixed(2))),
             new DataCell(new Text("\$"+getProjectedSave(saveObject, date).toStringAsFixed(2))),
@@ -253,22 +253,9 @@ class _SavePageState extends State<SavePage> {
     return "\$"+num.toStringAsFixed(2);
   }
 
-  double _getSuggestedSave(SaveObject save,DateTime date) {
-    Duration difference = date.difference(save.startDate);
-    int days = difference.inDays;
-    if(days == 0 && date.day == save.startDate.day)
-      days = 1;
-    int saveTimes = (days/save.frequency).floor();
-    print(days/save.frequency);
-    double projectedAmount = saveTimes*save.dividedAmount;
-    double autoFillAmount = projectedAmount - save.savedAmount;
-    if(autoFillAmount < 0) autoFillAmount = 0;
-    return autoFillAmount;
-  }
-
   void _openSaveDialog(context,SaveObject saveObject) async {
     MoneyMaskedTextController controller = new MoneyMaskedTextController(decimalSeparator: ".", thousandSeparator: ",", leftSymbol: "\$");
-    double amount = _getSuggestedSave(saveObject,new DateTime.now());
+    double amount = getSuggestedSave(saveObject,new DateTime.now());
     controller.updateValue(amount);
     double result = await showDialog(
         context: context,
@@ -317,6 +304,9 @@ class _SavePageState extends State<SavePage> {
         }]),
         'nextPayment': Timestamp.fromDate(nextPayment),
         'savedAmount': saveObject.savedAmount+amount,
+      });
+      saveDocRef.parent().parent().updateData({
+        'totalSaved': FieldValue.increment(amount),
       });
     }
   }
