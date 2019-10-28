@@ -155,7 +155,7 @@ class _ItemPageState extends State<ItemPage> {
                               showDialog(
                                 context: context,
                                 builder: (BuildContext context) {
-                                  List icons = [Icons.add,Icons.card_giftcard,Icons.category,Icons.description,Icons.phone];
+                                  List icons = [Icons.add,Icons.card_giftcard,Icons.category,Icons.description,Icons.phone,Icons.laptop,Icons.ac_unit,Icons.print,Icons.adjust,Icons.star,Icons.edit,Icons.map,Icons.airport_shuttle,Icons.assistant_photo,Icons.audiotrack,Icons.child_friendly,Icons.local_play,Icons.fitness_center,Icons.camera_alt,Icons.import_contacts,Icons.weekend,Icons.];
                                   Icon newIcon = icon;
                                   return new AlertDialog(
                                     title: new Text("Select Icon"),
