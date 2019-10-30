@@ -61,16 +61,21 @@ class _ItemPageState extends State<ItemPage> {
           child: new Column(
             children: <Widget>[
               new Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: new Column(
-                    children: <Widget>[
-                      new SimpleText(
+                elevation: 5,
+                child: new Column(
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: new SimpleText(
                         'Item Information',
-                        size: 18.0,
+                        size: 20.0,
                         bold: true,
                       ),
-                      new ThemeTextField(
+                    ),
+                    new Divider(height: 0,),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: new ThemeTextField(
                         controller: itemNameController,
                         label: 'Item Name',
                         width: 300.0,
@@ -80,8 +85,10 @@ class _ItemPageState extends State<ItemPage> {
                           });
                         },
                       ),
-                      Container(height: 10,),
-                      new ThemeTextField(
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: new ThemeTextField(
                         controller: itemCostController,
                         keyboardType: TextInputType.number,
                         label: 'Item Cost',
@@ -93,37 +100,49 @@ class _ItemPageState extends State<ItemPage> {
                           });
                         },
                       ),
-                      new DropdownButton(
-                        value: frequency,
-                        items: <DropdownMenuItem>[
-                          new DropdownMenuItem(
-                            child: new Text("Daily"),
-                            value: 1,
-                          ),
-                          new DropdownMenuItem(
-                            child: new Text("Weekly"),
-                            value: 7,
-                          ),
-                          new DropdownMenuItem(
-                            child: new Text("Bi-weekly"),
-                            value: 14,
-                          ),
-                          new DropdownMenuItem(
-                            child: new Text("Monthly"),
-                            value: 30,
-                          ),
-                          new DropdownMenuItem(
-                            child: new Text("Bi-monthly"),
-                            value: 60,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      child: Row(
+                        children: <Widget>[
+                          new SimpleText("Frequency: ", bold: true, size: 20,),
+                          new Container(width: 8,),
+                          new DropdownButton(
+                            value: frequency,
+                            items: <DropdownMenuItem>[
+                              new DropdownMenuItem(
+                                child: new Text("Daily"),
+                                value: 1,
+                              ),
+                              new DropdownMenuItem(
+                                child: new Text("Weekly"),
+                                value: 7,
+                              ),
+                              new DropdownMenuItem(
+                                child: new Text("Bi-weekly"),
+                                value: 14,
+                              ),
+                              new DropdownMenuItem(
+                                child: new Text("Monthly"),
+                                value: 30,
+                              ),
+                              new DropdownMenuItem(
+                                child: new Text("Bi-monthly"),
+                                value: 60,
+                              ),
+                            ],
+                            onChanged: (value) {
+                              setState(() {
+                                frequency = value;
+                              });
+                            },
                           ),
                         ],
-                        onChanged: (value) {
-                          setState(() {
-                            frequency = value;
-                          });
-                        },
                       ),
-                      new Row(
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      child: new Row(
                         children: <Widget>[
                           new SimpleText("Start Date: ", bold: true, size: 20,),
                           new SimpleText("${_startDate.month}/${_startDate.day}/${_startDate.year}", bold: false, size: 20,),
@@ -145,7 +164,10 @@ class _ItemPageState extends State<ItemPage> {
                           ),
                         ],
                       ),
-                      new Row(
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      child: new Row(
                         children: <Widget>[
                           new SimpleText("Icon: ", bold: true, size: 20,),
                           icon,
@@ -155,7 +177,7 @@ class _ItemPageState extends State<ItemPage> {
                               showDialog(
                                 context: context,
                                 builder: (BuildContext context) {
-                                  List icons = [Icons.add,Icons.card_giftcard,Icons.category,Icons.description,Icons.phone,Icons.laptop,Icons.ac_unit,Icons.print,Icons.adjust,Icons.star,Icons.edit,Icons.map,Icons.airport_shuttle,Icons.assistant_photo,Icons.audiotrack,Icons.child_friendly,Icons.local_play,Icons.fitness_center,Icons.camera_alt,Icons.import_contacts,Icons.weekend,Icons.];
+                                  List icons = [Icons.add,Icons.card_giftcard,Icons.category,Icons.description,Icons.phone,Icons.laptop,Icons.ac_unit,Icons.print,Icons.adjust,Icons.star,Icons.edit,Icons.map,Icons.airport_shuttle,Icons.assistant_photo,Icons.audiotrack,Icons.child_friendly,Icons.local_play,Icons.fitness_center,Icons.camera_alt,Icons.import_contacts,Icons.weekend];
                                   Icon newIcon = icon;
                                   return new AlertDialog(
                                     title: new Text("Select Icon"),
@@ -181,21 +203,26 @@ class _ItemPageState extends State<ItemPage> {
                           ),
                         ],
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
               new Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: new Column(
-                    children: <Widget>[
-                      new SimpleText(
+                elevation: 5,
+                child: new Column(
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: new SimpleText(
                         'Saving Information',
-                        size: 18.0,
+                        size: 20.0,
                         bold: true,
                       ),
-                      new Row(
+                    ),
+                    new Divider(height: 0,),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      child: new Row(
                         children: <Widget>[
                           new Radio(
                             value: 1,
@@ -206,13 +233,16 @@ class _ItemPageState extends State<ItemPage> {
                           new SimpleText('Save by Date', bold: false, size: 20,),
                         ],
                       ),
-                      new Row(
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
+                      child: new Row(
                         children: <Widget>[
                           new SimpleText("Save by: ", bold: true, size: 20,),
                           new SimpleText("${_dueDate.month}/${_dueDate.day}/${_dueDate.year}", bold: false, size: 20,),
-                          if(radioValue == 1)
-                            new IconButton(icon: new Icon(Icons.edit), disabledColor: Colors.white,),
                           if(radioValue == 2)
+                            new IconButton(icon: new Icon(Icons.edit), disabledColor: Colors.white,),
+                          if(radioValue == 1)
                             new IconButton(
                               icon: new Icon(Icons.edit),
                               onPressed: () async {
@@ -231,8 +261,11 @@ class _ItemPageState extends State<ItemPage> {
                           ),
                         ],
                       ),
-                      Container(height: 10,),
-                      new Row(
+                    ),
+                    new Divider(height: 0,),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+                      child: new Row(
                         children: <Widget>[
                           new Radio(
                             value: 2,
@@ -243,24 +276,29 @@ class _ItemPageState extends State<ItemPage> {
                           new SimpleText('Save by Amount', bold: false, size: 20,),
                         ],
                       ),
-                      Container(height: 10,),
-                      new Row(
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(8, 4, 8, 8),
+                      child: new Row(
                         children: <Widget>[
-                          new ThemeTextField(
-                            keyboardType: TextInputType.number,
-                            label: "Amount",
-                            controller: saveAmountController,
-                            width: 200,
-                            onChanged: (value) {
-                              setState(() {
-                                dividedAmount = double.parse(value.substring(1))*10;
-                              });
-                            },
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: new ThemeTextField(
+                              keyboardType: TextInputType.number,
+                              label: "Amount",
+                              controller: saveAmountController,
+                              width: 200,
+                              onChanged: (value) {
+                                setState(() {
+                                  dividedAmount = double.parse(value.substring(1))*10;
+                                });
+                              },
+                            ),
                           ),
                         ],
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
               new RaisedButton(

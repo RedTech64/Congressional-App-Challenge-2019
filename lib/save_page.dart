@@ -137,7 +137,7 @@ class _SavePageState extends State<SavePage> {
                         children: <Widget>[
                           Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: new SimpleText("Info", size: 16, bold: true,),
+                            child: new SimpleText("Info", size: 20, bold: true,),
                           ),
                           new Divider(height: 0,),
                           Padding(
@@ -147,6 +147,7 @@ class _SavePageState extends State<SavePage> {
                                 new Text("Start Date: ${saveObject.startDate.month}/${saveObject.startDate.day}/${saveObject.startDate.year}"),
                                 new Text("Complete Date: ${saveObject.completeDate.month}/${saveObject.completeDate.day}/${saveObject.completeDate.year}"),
                                 new Text("Plan: Save \$${saveObject.dividedAmount}, every ${saveObject.frequency} days."),
+                                new Text("Left: \$${(saveObject.cost-saveObject.savedAmount).toStringAsFixed(2)}, ${saveObject.completeDate.difference(DateTime.now()).inDays} days, ${_getFutureSaveDays(saveObject).length} payments"),
                               ],
                             ),
                           ),
@@ -162,13 +163,13 @@ class _SavePageState extends State<SavePage> {
                         children: <Widget>[
                           Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: new SimpleText("Saves", size: 16, bold: true,),
+                            child: new SimpleText("Saves", size: 20, bold: true,),
                           ),
                           new Divider(height: 0,),
                           new DataTable(
                             columns: [
                               new DataColumn(label: new Text('Date')),
-                              new DataColumn(label: new Text('Saved')),
+                              new DataColumn(label: new Text('Amount')),
                               new DataColumn(label: new Text('Total'))
                             ],
                             rows: _getDataRows(saveObject),
@@ -220,16 +221,19 @@ class _SavePageState extends State<SavePage> {
     List<DateTime> futureSaveData = futureSaveDays.getRange(0, futureShown).toList();
     int savedSize = list.length;
     for(DateTime date in futureSaveData) {
-      
+      Color textColor = Colors.red;
+      if(date.isAfter(DateTime.now())) {
+        textColor = Colors.grey;
+      }
       list.add(
         new DataRow(
           cells: [
-            new DataCell(new Text("${date.month}/${date.day}/${date.year}")),
+            new DataCell(new Text("${date.month}/${date.day}/${date.year}", style: new TextStyle(color: textColor),)),
             if(list.length == savedSize)
-              new DataCell(new Text("\$"+getSuggestedSave(saveObject, date).toStringAsFixed(2))),
+              new DataCell(new Text("\$"+getSuggestedSave(saveObject, date).toStringAsFixed(2), style: new TextStyle(color: textColor),)),
             if(list.length != savedSize)
-              new DataCell(new Text("\$"+saveObject.dividedAmount.toStringAsFixed(2))),
-            new DataCell(new Text("\$"+getProjectedSave(saveObject, date).toStringAsFixed(2))),
+              new DataCell(new Text("\$"+saveObject.dividedAmount.toStringAsFixed(2), style: new TextStyle(color: textColor),)),
+            new DataCell(new Text("\$"+getProjectedSave(saveObject, date).toStringAsFixed(2), style: new TextStyle(color: textColor),)),
           ],
         ),
       );

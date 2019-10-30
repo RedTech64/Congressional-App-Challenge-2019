@@ -73,11 +73,17 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                             children: <Widget>[
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: new SimpleText("Hello, Cole!", size: 24.0, bold: true,),
+                                child: new SimpleText("Stats", size: 24.0, bold: true,),
                               ),
                               new Divider(height: 0,),
-                              new SimpleText("Due Today: \$${_getDueToday(saveDocs).toStringAsFixed(2)}", size: 16, bold: false,),
-                              Center(child: new SimpleText("Total Saved: \$${userSnapshot.data['totalSaved'].toStringAsFixed(2)}", size: 16, bold: false,)),
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(8, 8, 8, 4),
+                                child: new SimpleText("Due Today: \$${_getDueToday(saveDocs).toStringAsFixed(2)}", size: 16, bold: false,),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(8, 4, 8, 8),
+                                child: new SimpleText("Total Saved: \$${userSnapshot.data['totalSaved'].toStringAsFixed(2)}", size: 16, bold: false,),
+                              ),
                             ],
                           ),
                         );
