@@ -251,6 +251,13 @@ class _ItemPageState extends State<ItemPage> {
                                   firstDate: DateTime.utc(_startDate.year, _startDate.month, _startDate.day),
                                   lastDate: DateTime(2200),
                                   context: context,
+                                  selectableDayPredicate: (date) {
+                                    if(clearTime(date).difference(clearTime(_startDate)).inDays % frequency == 0) {
+                                      return true;
+                                    } else {
+                                      return false;
+                                    }
+                                  },
                                 );
                               if(result != null) {
                                 setState(() {
