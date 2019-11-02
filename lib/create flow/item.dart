@@ -17,7 +17,7 @@ class _ItemPageState extends State<ItemPage> {
   var itemCostController;
   var saveAmountController;
   String itemName = "";
-  double itemCost = 100.0;
+  double itemCost = 0.0;
   double dividedAmount = 1.0;
   int radioValue = 2;
   DateTime _dueDate = new DateTime(DateTime.now().year,DateTime.now().month,DateTime.now().day);
@@ -357,7 +357,7 @@ class _ItemPageState extends State<ItemPage> {
   double _getSaveAmount() {
     Duration savingTime = _dueDate.difference(_startDate);
     Duration gap = new Duration(days: frequency);
-    int times = savingTime.inDays~/gap.inDays;
+    int times = (savingTime.inDays/gap.inDays).ceil()+1;
     return itemCost/times;
   }
 
@@ -366,8 +366,7 @@ class _ItemPageState extends State<ItemPage> {
     if(dividedAmount > 0)
       saveTimes = itemCost~/dividedAmount;
     Duration gap = new Duration(days: frequency);
-    DateTime withTime = DateTime.now().add(new Duration(days: gap.inDays*saveTimes));
-    print(withTime.toString());
+    DateTime withTime = DateTime.now().add(new Duration(days: gap.inDays*(saveTimes-1)));
     return new DateTime(withTime.year,withTime.month,withTime.day);
   }
 }

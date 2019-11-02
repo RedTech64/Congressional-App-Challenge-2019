@@ -225,14 +225,12 @@ class _SavePageState extends State<SavePage> {
       if(date.isAfter(DateTime.now())) {
         textColor = Colors.grey;
       }
+      num saveAmount = getProjectedSave(saveObject, date)-getProjectedSave(saveObject, date.subtract(new Duration(days: saveObject.frequency)));
       list.add(
         new DataRow(
           cells: [
             new DataCell(new Text("${date.month}/${date.day}/${date.year}", style: new TextStyle(color: textColor),)),
-            if(list.length == savedSize)
-              new DataCell(new Text("\$"+getSuggestedSave(saveObject, date).toStringAsFixed(2), style: new TextStyle(color: textColor),)),
-            if(list.length != savedSize)
-              new DataCell(new Text("\$"+saveObject.dividedAmount.toStringAsFixed(2), style: new TextStyle(color: textColor),)),
+            new DataCell(new Text("\$"+(saveAmount.toStringAsFixed(2)), style: new TextStyle(color: textColor),)),
             new DataCell(new Text("\$"+getProjectedSave(saveObject, date).toStringAsFixed(2), style: new TextStyle(color: textColor),)),
           ],
         ),
@@ -244,11 +242,12 @@ class _SavePageState extends State<SavePage> {
   List<DateTime> _getFutureSaveDays(SaveObject saveObject) {
     List<DateTime> saveDays = [];
     DateTime date = getNextPaymentDate(saveObject);
-    print(saveObject.completeDate.toString());
-    print(date.compareTo(saveObject.completeDate));
-    while(date.compareTo(saveObject.completeDate) < 0) {
+    while(date.compareTo(saveObject.completeDate.add(new Duration(days: 1))) < 0) {
       saveDays.add(date);
+      int oldDay = date.day;
       date = date.add(new Duration(days: saveObject.frequency));
+      if(oldDay == date.day)
+        date = date.add(new Duration(hours: 1));
     }
     return saveDays;
   }

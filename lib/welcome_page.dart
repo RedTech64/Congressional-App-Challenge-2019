@@ -74,7 +74,7 @@ class _WelcomePageState extends State<WelcomePage> {
                 new Spacer(flex: 1,),
 
                 new Text(
-                    'saguaro',
+                    'Saguaro',
                     style: new TextStyle(
                       color: Color.fromRGBO(255,255,255, 1.0),
                       fontSize: 48.0,
@@ -83,17 +83,6 @@ class _WelcomePageState extends State<WelcomePage> {
 
                     )
 
-                ),
-
-                new Spacer(flex: 1,),
-
-                new Text(
-                  'Welcome',
-                  style: new TextStyle(
-                    color: Color.fromRGBO(255,255,255, 1.0),
-                    fontSize: 24.0,
-                    fontWeight: FontWeight.bold,
-                  ),
                 ),
                 new Spacer(flex: 1,),
                 new Text(

@@ -71,7 +71,10 @@ DateTime getNextPaymentDate(SaveObject saveObject) {
 
 double getProjectedSave(SaveObject saveObject, DateTime date) {
   int days = date.difference(saveObject.startDate).inDays;
-  return (saveObject.dividedAmount+(days/saveObject.frequency)*saveObject.dividedAmount);
+  num total = saveObject.dividedAmount+(days/saveObject.frequency)*saveObject.dividedAmount;
+  if(total > saveObject.cost)
+    total = saveObject.cost;
+  return total;
 }
 
 String getNextPaymentDateFormatted(saveObject) {
@@ -93,9 +96,14 @@ double getSuggestedSave(SaveObject save,DateTime date) {
     return save.dividedAmount;
   int days = difference.inDays;
   int saveTimes = (days/save.frequency).floor();
-  print(saveTimes);
   double projectedAmount = saveTimes*save.dividedAmount;
   double autoFillAmount = projectedAmount - save.savedAmount;
+  if(autoFillAmount > save.cost)
+    autoFillAmount = save.cost;
   if(autoFillAmount < 0) autoFillAmount = 0;
   return autoFillAmount;
+}
+
+DateTime clearTime(DateTime dateTime) {
+  return new DateTime(dateTime.year,dateTime.month,dateTime.day);
 }
