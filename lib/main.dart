@@ -48,7 +48,6 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   bool _ready = false;
-  FirebaseUser _user;
   StreamSubscription<FirebaseUser> _listener;
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
 
@@ -67,12 +66,12 @@ class _MyHomePageState extends State<MyHomePage> {
       },
     );
 
-    _checkCurrentUser().then((value) {
-      getUserData(_user.uid).then((doc) {
+    _checkCurrentUser().then((user) {
+      getUserData(user.uid).then((doc) {
         var container = StateContainer.of(context);
-        container.updateUserInfo(uid: _user.uid);
+        container.updateUserInfo(uid: user.uid);
         if(!doc.exists) {
-          setUpNewUser(_user.uid).then((value) {
+          setUpNewUser(user.uid).then((value) {
             Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) {
               return new WelcomePage();
             }));
@@ -135,8 +134,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Future _checkCurrentUser() async {
-    _user = await _auth.currentUser();
-    _user?.getIdToken(refresh: true);
+    FirebaseUser _user;
     _listener = _auth.onAuthStateChanged.listen((FirebaseUser user) async {
       if(user == null) {
         await signInAnonymously();
@@ -144,7 +142,13 @@ class _MyHomePageState extends State<MyHomePage> {
       setState(() {
         _user = user;
       });
+      print("SIGNED IN");
     });
+    _user = await _auth.currentUser();
+    _user?.getIdToken(refresh: true);
+    if(_user == null || _user.uid == null)
+      await signInAnonymously();
+    return _user;
   }
 
   @override
