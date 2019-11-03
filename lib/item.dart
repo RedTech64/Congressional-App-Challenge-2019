@@ -41,7 +41,6 @@ class _ItemPageState extends State<ItemPage> {
     if(radioValue == 2)
       _dueDate = _getCompleteDate();
     var container = StateContainer.of(context);
-    print(container.user.uid);
     return Scaffold(
       appBar: new AppBar(
         iconTheme: IconThemeData(
@@ -93,7 +92,6 @@ class _ItemPageState extends State<ItemPage> {
                         label: 'Item Cost',
                         width: 200,
                         onChanged: (value) {
-                          print(itemCostController.numberValue);
                           setState(() {
                             itemCost = itemCostController.numberValue;
                           });
