@@ -17,7 +17,7 @@ class _ItemPageState extends State<ItemPage> {
   var itemCostController;
   var saveAmountController;
   String itemName = "";
-  double itemCost = 0.0;
+  double itemCost = 10.0;
   double dividedAmount = 1.0;
   int radioValue = 2;
   DateTime _dueDate = new DateTime(DateTime.now().year,DateTime.now().month,DateTime.now().day);
@@ -28,8 +28,8 @@ class _ItemPageState extends State<ItemPage> {
   @override
   void initState() {
     itemNameController = new TextEditingController(text: itemName);
-    itemCostController = new MoneyMaskedTextController(leftSymbol: "\$", initialValue: itemCost, decimalSeparator: ".", thousandSeparator: ",");
-    saveAmountController = new MoneyMaskedTextController(leftSymbol: "\$", initialValue: dividedAmount, decimalSeparator: ".", thousandSeparator: ",");
+    itemCostController = new MoneyMaskedTextController(leftSymbol: "\$", initialValue: 10.0, decimalSeparator: ".", thousandSeparator: ",");
+    saveAmountController = new MoneyMaskedTextController(leftSymbol: "\$", initialValue: 1.0, decimalSeparator: ".", thousandSeparator: ",");
     super.initState();
   }
 
@@ -92,11 +92,11 @@ class _ItemPageState extends State<ItemPage> {
                         controller: itemCostController,
                         keyboardType: TextInputType.number,
                         label: 'Item Cost',
-                        width: 200.0,
+                        width: 200,
                         onChanged: (value) {
-                          print(value);
+                          print(itemCostController.numberValue);
                           setState(() {
-                            itemCost = double.parse(value.substring(1))*10;
+                            itemCost = itemCostController.numberValue;
                           });
                         },
                       ),
@@ -158,6 +158,8 @@ class _ItemPageState extends State<ItemPage> {
                               if(result != null) {
                                 setState(() {
                                   _startDate = new DateTime(result.year,result.month,result.day);
+                                  if(_dueDate.isBefore(result))
+                                    _dueDate = _startDate;
                                 });
                               }
                             },
@@ -297,7 +299,7 @@ class _ItemPageState extends State<ItemPage> {
                               width: 200,
                               onChanged: (value) {
                                 setState(() {
-                                  dividedAmount = double.parse(value.substring(1))*10;
+                                  dividedAmount = saveAmountController.numberValue;
                                 });
                               },
                             ),
@@ -369,6 +371,8 @@ class _ItemPageState extends State<ItemPage> {
   }
 
   DateTime _getCompleteDate() {
+    if(itemCost == 0)
+      return DateTime.now();
     int saveTimes = 1;
     if(dividedAmount > 0)
       saveTimes = itemCost~/dividedAmount;

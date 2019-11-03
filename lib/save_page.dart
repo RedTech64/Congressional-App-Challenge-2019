@@ -246,8 +246,7 @@ class _SavePageState extends State<SavePage> {
       saveDays.add(date);
       int oldDay = date.day;
       date = date.add(new Duration(days: saveObject.frequency));
-      if(oldDay == date.day)
-        date = date.add(new Duration(hours: 1));
+      date = date.add(new Duration(hours: 1));
     }
     return saveDays;
   }

@@ -92,7 +92,7 @@ bool onTime(SaveObject saveObject) {
 
 double getSuggestedSave(SaveObject save,DateTime date) {
   Duration difference = date.difference(save.startDate);
-  if(save.savedAmount == 0 && save.startDate.day == DateTime.now().day && save.startDate.month == DateTime.now().month && save.startDate.year == DateTime.now().year)
+  if(save.savedAmount == 0)
     return save.dividedAmount;
   int days = difference.inDays;
   int saveTimes = (days/save.frequency).floor();
