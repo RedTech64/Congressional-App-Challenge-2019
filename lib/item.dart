@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:saguaro/common_widgets.dart';
 import 'package:saguaro/main.dart';
-import 'selection_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:saguaro/user_data_container.dart';
 import 'package:flutter_masked_text/flutter_masked_text.dart';
