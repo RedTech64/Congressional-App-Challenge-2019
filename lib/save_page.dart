@@ -304,7 +304,7 @@ class _SavePageState extends State<SavePage> {
           'total': saveObject.savedAmount+amount,
           //TODO: Save day bool
         }]),
-        'nextPayment': Timestamp.fromDate(nextPayment),
+        'nextReminder': Timestamp.fromDate(nextPayment),
         'savedAmount': saveObject.savedAmount+amount,
       });
       saveDocRef.parent().parent().updateData({
