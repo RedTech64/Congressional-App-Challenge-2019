@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
     return new StateContainer(
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
+        title: 'Saguaro',
         theme: ThemeData(
           primaryColor: Color.fromRGBO(105,240,174,1.0),
           canvasColor: Color.fromRGBO(255,255,255,1.0),
@@ -68,6 +68,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
 
     _checkCurrentUser().then((user) {
+      print(user.uid);
       getUserData(user.uid).then((doc) {
         var container = StateContainer.of(context);
         container.updateUserInfo(uid: user.uid);
@@ -120,6 +121,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Future<DocumentSnapshot> getUserData(uid) {
+    print(uid);
     return Firestore.instance.collection('users').document(uid).get();
   }
 
