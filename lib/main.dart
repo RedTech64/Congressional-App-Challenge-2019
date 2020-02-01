@@ -68,7 +68,6 @@ class _MyHomePageState extends State<MyHomePage> {
     );
 
     _checkCurrentUser().then((user) {
-      print(user.uid);
       getUserData(user.uid).then((doc) {
         var container = StateContainer.of(context);
         container.updateUserInfo(uid: user.uid);
@@ -121,11 +120,11 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Future<DocumentSnapshot> getUserData(uid) {
-    print(uid);
     return Firestore.instance.collection('users').document(uid).get();
   }
 
   Future<FirebaseUser> signInAnonymously() async {
+    print("SIA");
     FirebaseUser user;
     try {
       AuthResult result = await _auth.signInAnonymously();
@@ -138,19 +137,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future _checkCurrentUser() async {
     FirebaseUser _user;
-    _listener = _auth.onAuthStateChanged.listen((FirebaseUser user) async {
-      if(user == null) {
-        await signInAnonymously();
-      }
-      setState(() {
-        _user = user;
-      });
-      print("SIGNED IN");
-    });
-    _user = await _auth.currentUser();
-    _user?.getIdToken(refresh: true);
-    if(_user == null || _user.uid == null)
-      await signInAnonymously();
+    _user = await signInAnonymously();
     return _user;
   }
 
