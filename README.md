@@ -1,16 +1,10 @@
-# cac_2019
+# Saguaro
 
-A new Flutter application.
+Saguaro is a money management app that allows for users to create customized savings plans. Users can input what they are saving for and how much they look to save, and our app along with customization input from the user will track when the user should make a payment to best achieve their savings goal. Saguaro uses push notifications to remind the user when to make a payment in order to keep them on track.
 
-## Getting Started
+## Download
 
-This project is a starting point for a Flutter application.
+Available on Google Play and Apple App Store now!
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.dev/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+https://play.google.com/store/apps/details?id=com.redtech.saguaro
+https://apps.apple.com/us/app/saguaro-savings-planner/id1486941569
